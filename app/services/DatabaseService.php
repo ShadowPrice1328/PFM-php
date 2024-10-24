@@ -13,7 +13,7 @@ class DatabaseService
                 $_ENV['DB_USER'],
                 $_ENV['DB_PASS']
             );
-            // Set PDO attributes for error handling
+            // Set PDO's attributes for error handling
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
