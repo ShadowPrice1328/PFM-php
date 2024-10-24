@@ -8,39 +8,45 @@
 </head>
 <body>
 <?php
+// Include the config and environment loading code
+require_once (__DIR__. '/../../../config/config.php');
 
-echo "<div class='container text-center'>";
+// Set up page-specific variables
+//$authenticated = !User::isAuthenticated();
+$authenticated = true;
+$pageTitle = 'Home Page';
 
-// Connection status
-echo "<p class='status-message'>" . htmlspecialchars($viewModel['connectionStatus']) . "</p>";
+ob_start(); // Start output buffering
+?>
+<div class='container text-center'>
+    <p class='status-message'>Connection status: <?php echo htmlspecialchars($viewModel['connectionStatus']); ?></p>
 
-// Output categories
-if (isset($viewModel['categories'])) {
-    echo "<div class='dashboard'>";
-    echo "<div class='card'>";
-    echo "<h2>Categories (" . count($viewModel['categories']) . ")</h2>";
-    echo "<ul>";
-    foreach ($viewModel['categories'] as $category) {
-        echo "<li>" . htmlspecialchars($category['Name']) . "</li>";
-    }
-    echo "</ul>";
-    echo "</div>"; // End of card for categories
+    <div class='dashboard'>
+        <div class='card'>
+            <h2>Categories (<?php echo count($viewModel['categories']); ?>)</h2>
+            <ul>
+                <?php foreach ($viewModel['categories'] as $category): ?>
+                    <li><?php echo htmlspecialchars($category['Name']); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
 
-    // Output transactions
-    if (isset($viewModel['transactions'])) {
-        echo "<div class='card'>";
-        echo "<h2>Transactions</h2>";
-        echo "<ul>";
-        foreach ($viewModel['transactions'] as $transaction) {
-            echo "<li>" . htmlspecialchars($transaction['Description']) . " - " . htmlspecialchars($transaction['Cost']) . "</li>";
-        }
-        echo "</ul>";
-        echo "</div>"; // End of card for transactions
-    }
-    echo "</div>"; // End of dashboard
-}
+        <?php if (isset($viewModel['transactions'])): ?>
+            <div class='card'>
+                <h2>Transactions</h2>
+                <ul>
+                    <?php foreach ($viewModel['transactions'] as $transaction): ?>
+                        <li><?php echo htmlspecialchars($transaction['Description']) . ' - ' . htmlspecialchars($transaction['Cost']); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
 
-echo "</div>";
+<?php
+$content = ob_get_clean(); // Get the buffered content
+include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
 ?>
 </body>
 </html>
