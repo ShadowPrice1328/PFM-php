@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) : 'Home Page'; ?></title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.6.0-web/css/fontawesome.css" />
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="assets/fontawesome-free-6.6.0-web/js/all.js"> </script>
+
 </head>
 <body>
 <header>
