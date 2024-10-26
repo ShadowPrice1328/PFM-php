@@ -8,7 +8,6 @@
     <script src="js/jquery-3.7.1.min.js"></script>
 
     <script src="js/categories.js"></script>
-    <script src="js/back-to-list.js"></script>
 </head>
 <body>
 
@@ -76,10 +75,13 @@ ob_start(); // Start output buffering
     </p>
 </div>
 
-<input type="hidden" id="link" value="categories/search" />
+<input type="hidden" id="link" value="/categories" />
 
 <?php
 $content = ob_get_clean(); // Get the buffered content
 include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
 ?>
 </body>
+
+<script src="js/back-to-list.js"></script>
+

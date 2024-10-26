@@ -3,12 +3,7 @@
         url: $("#link").val(),
         method: 'GET',
         success: function (entities) {
-            if ($("#link").val() == "categories/search") {
-                $("#categories-body").html(entities);
-            } else {
-                $("#transactions-body").html(entities);
-            }
-            $("#back-to-list").hide();
+            window.location.href = `${$("#link").val()}`;
         },
         error: function (error) {
             console.error("Error fetching data:", error);
