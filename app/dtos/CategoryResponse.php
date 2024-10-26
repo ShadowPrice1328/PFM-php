@@ -2,6 +2,8 @@
 
 namespace dtos;
 
+use entities\Category;
+
 /**
  * Represents a DTO for responses from category-related operations.
  */

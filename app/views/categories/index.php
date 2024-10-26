@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/jquery-3.7.1.min.js"></script>
+
     <script src="js/categories.js"></script>
     <script src="js/back-to-list.js"></script>
 </head>
@@ -46,19 +48,19 @@ ob_start(); // Start output buffering
         <?php foreach ($categories as $item): ?>
             <tr>
                 <td>
-                    <?php echo htmlspecialchars($item['Name']); ?>
+                    <?php echo htmlspecialchars($item->name); ?>
                 </td>
                 <td>
-                    <?php echo htmlspecialchars($item['Description']); ?>
+                    <?php echo htmlspecialchars($item->description); ?>
                 </td>
                 <td>
-                    <a href="/categories/edit?id=<?php echo urlencode($item['Id']); ?>">
+                    <a href="/categories/edit?id=<?php echo urlencode($item->id); ?>">
                         <i class="fa-solid fa-pen"></i>
                     </a> |
-                    <a href="/categories/details?id=<?php echo urlencode($item['Id']); ?>">
+                    <a href="/categories/details?id=<?php echo urlencode($item->id); ?>">
                         <i class="fa-solid fa-circle-info"></i>
                     </a> |
-                    <a href="/categories/delete?id=<?php echo urlencode($item['Id']); ?>">
+                    <a href="/categories/delete?id=<?php echo urlencode($item->id); ?>">
                         <i class="fa-solid fa-trash"></i>
                     </a>
                 </td>

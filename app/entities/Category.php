@@ -21,4 +21,11 @@ class Category
      * @var string|null
      */
     public ?string $description;
+
+    public function __construct(string $id, string $name, ?string $description = null)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->description = $description;
+    }
 }

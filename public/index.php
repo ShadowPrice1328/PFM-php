@@ -9,6 +9,8 @@ require_once(__DIR__ . '/../app/services/DatabaseService.php');
 require_once(__DIR__ . '/../app/services/CategoriesService.php');
 require_once(__DIR__ . '/../app/services/TransactionsService.php');
 
+use services\CategoriesService;
+
 // Ініціалізація сервісів
 $databaseService = new DatabaseService();
 $categoriesService = new CategoriesService($databaseService->getPdo());

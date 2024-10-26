@@ -27,7 +27,7 @@ class CategoriesController
 
     public function index()
     {
-        $categories = $this->categoriesService->getAllCategories();
+        $categories = $this->categoriesService->getCategories();
 
         include_once(__DIR__ . '/../views/categories/index.php');
     }
