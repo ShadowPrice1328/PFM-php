@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__ . '/../services/DatabaseService.php');
-require_once(__DIR__ . '/../services/CategoriesService.php');
+//require_once(__DIR__ . '/../services/DatabaseService.php');
+//require_once(__DIR__ . '/../interfaces/ICategoriesService.php');
 
 class CategoriesController
 {
@@ -14,7 +14,7 @@ class CategoriesController
         $this->checkDatabaseConnection();
     }
 
-    protected function checkDatabaseConnection()
+    protected function checkDatabaseConnection(): void
     {
         list($isConnected, $errorMessage) = $this->databaseService->canConnect();
 
@@ -25,7 +25,7 @@ class CategoriesController
         }
     }
 
-    public function index()
+    public function index(): void
     {
         $categories = $this->categoriesService->getCategories();
 

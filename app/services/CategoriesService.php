@@ -9,6 +9,7 @@ use dtos\CategoryExtensions;
 use dtos\CategoryResponse;
 use dtos\CategoryUpdateRequest;
 use entities\Category;
+use helpers\ValidationHelper;
 use interfaces\ICategoriesService;
 use InvalidArgumentException;
 use PDO;
@@ -55,7 +56,7 @@ class CategoriesService implements ICategoriesService
         }
 
         // Validate model
-        $this->validateModel($request);
+        ValidationHelper::modelValidation($request);
 
         // Check for existing category
         if ($this->categoryExists($request->name)) {
@@ -72,12 +73,9 @@ class CategoriesService implements ICategoriesService
 
     public function updateCategory(CategoryUpdateRequest $request): CategoryResponse
     {
-        if ($request === null) {
-            throw new InvalidArgumentException("Request cannot be null.");
-        }
-
         // Validate model
-        $this->validateModel($request);
+        ValidationHelper::modelValidation($request);
+//        $this->validateModel($request);
 
         // Update the category in the database
         $stmt = $this->pdo->prepare('UPDATE categories SET name = ?, description = ? WHERE id = ?');
@@ -112,7 +110,7 @@ class CategoriesService implements ICategoriesService
         $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map(function ($cat) {
-            return new CategoryResponse($cat['id'], $cat['name'], $cat['description']);
+            return new CategoryResponse($cat['Id'], $cat['Name'], $cat['Description']);
         }, $categories);
     }
 
@@ -120,12 +118,6 @@ class CategoriesService implements ICategoriesService
     {
         $stmt = $this->pdo->query('SELECT name FROM categories');
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
-    }
-
-    private function validateModel($request)
-    {
-        // Implement your validation logic here
-        // You can throw exceptions for any validation failures
     }
 
     private function categoryExists(string $name): bool
