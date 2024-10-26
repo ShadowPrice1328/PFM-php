@@ -45,28 +45,3 @@ switch ($request) {
         http_response_code(404);
         require __DIR__ . '/../app/views/404.php';
 }
-
-//    case '/categories':
-//        $categoriesService->index();
-//        break;
-//
-//    case '/transactions':
-//        $transactionsService->index();
-//        break;
-
-//$page = isset($_GET['page']) ? $_GET['page'] : 'home'; // Отримуємо параметр сторінки
-//$action = isset($_GET['action']) ? $_GET['action'] : 'index'; // Отримуємо параметр дії
-
-//switch ($page) {
-//    case 'home':
-//        if ($action === 'contact') {
-//            $homeController->contact();
-//        } else {
-//            $homeController->index(); // Викликаємо метод index
-//        }
-//        break;
-//    default:
-//        $homeController->index(); // Викликаємо метод index у HomeController
-//        break;
-//}
-
