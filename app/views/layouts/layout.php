@@ -14,10 +14,10 @@
 <header>
     <ul>
         <li><a href='/'>Home</a></li>
-        <li><a href="/categories" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Categories</a></li>
-        <li><a href="/transactions" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Transactions</a></li>
-        <li><a href="/reports" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Overview</a></li>
-        <li><a href="/daily_report" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Daily Report</a></li>
+        <li><a href="/categories" class="<?php echo !$authenticated ? '' : 'text-muted'; ?>">Categories</a></li>
+        <li><a href="/transactions" class="<?php echo !$authenticated ? '' : 'text-muted'; ?>">Transactions</a></li>
+        <li><a href="/reports" class="<?php echo !$authenticated ? '' : 'text-muted'; ?>">Overview</a></li>
+        <li><a href="/daily_report" class="<?php echo !$authenticated ? '' : 'text-muted'; ?>">Daily Report</a></li>
         <li><a href="/contact">Contact</a></li>
         <li style="float: right;">
             <?php if (!$authenticated): ?>
@@ -29,9 +29,9 @@
     </ul>
 </header>
 
-<div class="container">
+<main>
     <?php echo isset($content) ? $content : ''; ?>
-</div>
+</main>
 
 <footer class="text-muted">
     <div class="text-center">

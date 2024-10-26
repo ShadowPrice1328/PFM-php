@@ -26,7 +26,7 @@ class HomeController
 
         if ($isConnected) {
             $viewModel['connectionStatus'] = 'Connected to database!';
-            $viewModel['categories'] = $this->categoriesService->getCategories();
+            $viewModel['categories'] = $this->categoriesService->getAllCategories();
             $viewModel['transactions'] = $this->transactionsService->getTransactions();
         } else {
             $viewModel['connectionStatus'] = 'Connection error!';

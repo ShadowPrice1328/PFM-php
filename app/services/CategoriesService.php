@@ -9,7 +9,7 @@ class CategoriesService
         $this->pdo = $pdo;
     }
 
-    public function getCategories()
+    public function getAllCategories()
     {
         $stmt = $this->pdo->query('SELECT * FROM categories');
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

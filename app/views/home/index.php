@@ -13,7 +13,6 @@
 require_once (__DIR__. '/../../../config/config.php');
 
 $authenticated = false;
-$pageTitle = 'Home Page';
 
 ob_start(); // Start output buffering
 ?>
