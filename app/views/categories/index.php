@@ -77,6 +77,7 @@ ob_start(); // Start output buffering
 </div>
 
 <input type="hidden" id="link" value="categories/search" />
+
 <?php
 $content = ob_get_clean(); // Get the buffered content
 include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout

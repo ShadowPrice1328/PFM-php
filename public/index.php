@@ -43,6 +43,12 @@ switch ($request) {
     case '/categories':
         $categoriesController->index();
         break;
+    case (preg_match('/^\/categories\/search\/(.+)$/', $request) ? $request : false):
+        // Extract the category name from the URL
+        preg_match('/^\/categories\/search\/(.+)$/', $request, $matches);
+        $categoryName = $matches[1]; // The category name from the URL
+        $categoriesController->search($categoryName);
+        break;
     default:
         http_response_code(404);
         require __DIR__ . '/../app/views/404.php';

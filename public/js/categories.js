@@ -1,20 +1,16 @@
 ﻿$(document).ready(function () {
     $("#search-button").on("click", function () {
-        
         var input = $("#search-field").val().trim();
 
         if (input !== "") {
             $.ajax({
-                url: `Categories/search/${input}`,
+                url: `categories/search/${input}`,
                 method: 'GET',
-                success: function (categories) {
-                    if (categories.trim() === "") {
-                        $("#message").text("Nothing found!");
-                    } else {
-                        $("#categories-body").html(categories);
-                        $("#back-to-list").show();
-                        $("#message").text("");
-                    }
+                dataType: 'json', // Expecting a JSON response
+                success: function (response) {
+                    $("#categories-body").html(response.content); // Update categories table
+                    $("#message").text(response.message); // Display message
+                    $("#back-to-list").show(); // Show the back button
                 },
                 error: function (error) {
                     console.error("Error fetching categories:", error);
@@ -22,7 +18,7 @@
                 }
             });
         } else {
-            document.getElementById("message").innerHTML = "";
+            $("#message").text(""); // Clear the message if input is empty
         }
     });
 });
