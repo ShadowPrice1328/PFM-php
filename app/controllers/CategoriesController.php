@@ -1,14 +1,17 @@
 <?php
 
 require_once __DIR__ . "/../dtos/CategoryUpdateRequest.php";
+require_once __DIR__ . "/../dtos/CategoryAddRequest.php";
 
+use dtos\CategoryAddRequest;
 use dtos\CategoryUpdateRequest;
 use helpers\ValidationHelper;
+use interfaces\ICategoriesService;
 
 class CategoriesController
 {
     private $databaseService;
-    private $categoriesService;
+    private ICategoriesService $categoriesService;
     public function __construct($databaseService, $categoriesService)
     {
         $this->databaseService = $databaseService;
@@ -115,7 +118,7 @@ class CategoriesController
         include_once(__DIR__ . '/../views/categories/details.php');
     }
 
-    public function delete(string $id)
+    public function delete(string $id): void
     {
         $category = $this->categoriesService->getCategoryByCategoryId($id);
 
@@ -137,5 +140,26 @@ class CategoriesController
         }
 
         include_once(__DIR__ . '/../views/categories/delete.php');
+    }
+
+    public function create() : void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $name = trim($_POST['name']);
+            $description = trim($_POST['description']);
+
+            $categoryAddRequest = new CategoryAddRequest($name, $description);
+
+            $errors = ValidationHelper::modelValidation($categoryAddRequest);
+
+            if (empty($errors))
+            {
+                $this->categoriesService->addCategory($categoryAddRequest);
+                header("Location: /categories");
+                exit;
+            }
+        }
+        include_once __DIR__ . '/../views/categories/create.php';
     }
 }

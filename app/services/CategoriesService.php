@@ -57,17 +57,17 @@ class CategoriesService implements ICategoriesService
             throw new InvalidArgumentException("Request cannot be null.");
         }
 
-        // Validate model
-        ValidationHelper::modelValidation($request);
-
         // Check for existing category
         if ($this->categoryExists($request->name)) {
             throw new InvalidArgumentException("This category already exists.");
         }
 
+        // Transform AddRequest to Category domain model
+        $category = $request->toCategory();
+
         // Insert category into the database
-        $stmt = $this->pdo->prepare('INSERT INTO categories (name, description) VALUES (?, ?)');
-        $stmt->execute([$request->name, $request->description]);
+        $stmt = $this->pdo->prepare('INSERT INTO categories (Id, Name, Description) VALUES (?, ?, ?)');
+        $stmt->execute([$category->id, $category->name, $category->description]);
         $categoryId = $this->pdo->lastInsertId();
 
         return new CategoryResponse($categoryId, $request->name, $request->description);

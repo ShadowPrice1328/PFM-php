@@ -2,6 +2,7 @@
 
 namespace helpers;
 
+use dtos\CategoryAddRequest;
 use InvalidArgumentException;
 
 class ValidationHelper
@@ -11,7 +12,7 @@ class ValidationHelper
         $errors = [];
 
         // Validate ID
-        if (empty($obj->id)) {
+        if (empty($obj->id) && !($obj instanceof CategoryAddRequest)) {
             $errors['id'] = "Id cannot be blank.";
         }
 

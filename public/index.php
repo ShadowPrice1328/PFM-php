@@ -58,6 +58,9 @@ switch ($request) {
     case $request === '/categories/delete' && isset($_GET['id']):
         $categoriesController->delete($_GET['id']);
         break;
+    case $request === '/categories/create':
+        $categoriesController->create();
+        break;
     default:
         http_response_code(404);
         require __DIR__ . '/../app/views/404.php';
