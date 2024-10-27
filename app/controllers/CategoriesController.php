@@ -94,8 +94,6 @@ class CategoriesController
                     header("Location: /categories");
                     exit;
                 } else {
-                    var_dump($errors);
-
                     $errors['summary'] = 'An error occurred while updating the category.';
                 }
             }
@@ -104,4 +102,16 @@ class CategoriesController
         include_once(__DIR__ . '/../views/categories/edit.php');
     }
 
+    public function details(string $id) : void
+    {
+        $category = $this->categoriesService->getCategoryByCategoryId($id);
+
+        if (!$category)
+        {
+            include_once __DIR__ . '/../views/404.php';
+            return;
+        }
+
+        include_once(__DIR__ . '/../views/categories/details.php');
+    }
 }

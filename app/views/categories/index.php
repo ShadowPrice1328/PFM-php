@@ -24,10 +24,10 @@ ob_start(); // Start output buffering
         <thead>
         <tr>
             <th>
-                <?php echo htmlspecialchars(isset($columnNames['name']) ? $columnNames['name'] : 'Name'); ?>
+                <?php echo htmlspecialchars($columnNames['name'] ?? 'Name'); ?>
             </th>
             <th>
-                <?php echo htmlspecialchars(isset($columnNames['description']) ? $columnNames['description'] : 'Description'); ?>
+                <?php echo htmlspecialchars($columnNames['description'] ?? 'Description'); ?>
             </th>
 
             <th>Actions</th>
