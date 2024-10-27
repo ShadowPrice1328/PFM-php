@@ -1,5 +1,7 @@
 <?php
 
+namespace controllers;
+
 require_once __DIR__ . "/../dtos/CategoryUpdateRequest.php";
 require_once __DIR__ . "/../dtos/CategoryAddRequest.php";
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace controllers;
+
 require_once(__DIR__ . '/../services/DatabaseService.php');
 require_once(__DIR__ . '/../services/CategoriesService.php');
 require_once(__DIR__ . '/../services/TransactionsService.php');

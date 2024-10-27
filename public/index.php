@@ -5,10 +5,14 @@ ini_set('display_errors', 1);
 
 require_once(__DIR__ . '/../app/controllers/HomeController.php');
 require_once(__DIR__ . '/../app/controllers/CategoriesController.php');
+require_once(__DIR__ . '/../app/controllers/AuthController.php');
 require_once(__DIR__ . '/../app/services/DatabaseService.php');
 require_once(__DIR__ . '/../app/services/CategoriesService.php');
 require_once(__DIR__ . '/../app/services/TransactionsService.php');
 
+use controllers\AuthController;
+use controllers\CategoriesController;
+use controllers\HomeController;
 use services\CategoriesService;
 
 // Ініціалізація сервісів
@@ -18,6 +22,7 @@ $transactionsService = new TransactionsService($databaseService->getPdo());
 
 $homeController = new HomeController($databaseService, $categoriesService, $transactionsService);
 $categoriesController = new CategoriesController($databaseService, $categoriesService);
+$authController = new AuthController();
 
 // Отримуємо шлях запиту без параметрів
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -60,6 +65,9 @@ switch ($request) {
         break;
     case $request === '/categories/create':
         $categoriesController->create();
+        break;
+    case $request === '/register':
+        $authController->index();
         break;
     default:
         http_response_code(404);
