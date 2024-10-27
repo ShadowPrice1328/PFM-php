@@ -114,4 +114,28 @@ class CategoriesController
 
         include_once(__DIR__ . '/../views/categories/details.php');
     }
+
+    public function delete(string $id)
+    {
+        $category = $this->categoriesService->getCategoryByCategoryId($id);
+
+        if (!$category)
+        {
+            include_once __DIR__ . '/../views/404.php';
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $deleted = $this->categoriesService->deleteCategory($id);
+
+            if ($deleted)
+            {
+                header("Location: /categories");
+                exit;
+            }
+        }
+
+        include_once(__DIR__ . '/../views/categories/delete.php');
+    }
 }

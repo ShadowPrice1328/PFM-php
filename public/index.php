@@ -55,6 +55,9 @@ switch ($request) {
     case $request === '/categories/details' && isset($_GET['id']):
         $categoriesController->details($_GET['id']);
         break;
+    case $request === '/categories/delete' && isset($_GET['id']):
+        $categoriesController->delete($_GET['id']);
+        break;
     default:
         http_response_code(404);
         require __DIR__ . '/../app/views/404.php';
