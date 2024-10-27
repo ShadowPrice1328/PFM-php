@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/jquery-3.7.1.min.js"></script>
-
-    <script src="js/categories.js"></script>
-</head>
-<body>
-
 <?php
 $authenticated = false;
+$pageTitle = "Categories";
 ob_start(); // Start output buffering
 ?>
+
+<script src="/js/categories.js"></script>
 
 <div class="page-content">
 
@@ -81,7 +71,6 @@ ob_start(); // Start output buffering
 $content = ob_get_clean(); // Get the buffered content
 include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
 ?>
-</body>
 
 <script src="js/back-to-list.js"></script>
 

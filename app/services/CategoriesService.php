@@ -4,6 +4,8 @@ namespace services;
 
 require_once __DIR__ . '/../dtos/CategoryResponse.php';
 require_once __DIR__ . '/../entities/Category.php';
+require_once __DIR__ . '/../helpers/ValidationHelper.php';
+
 use dtos\CategoryAddRequest;
 use dtos\CategoryExtensions;
 use dtos\CategoryResponse;
@@ -73,10 +75,6 @@ class CategoriesService implements ICategoriesService
 
     public function updateCategory(CategoryUpdateRequest $request): CategoryResponse
     {
-        // Validate model
-        ValidationHelper::modelValidation($request);
-//        $this->validateModel($request);
-
         // Update the category in the database
         $stmt = $this->pdo->prepare('UPDATE categories SET name = ?, description = ? WHERE id = ?');
         $stmt->execute([$request->name, $request->description, $request->id]);

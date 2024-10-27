@@ -6,23 +6,25 @@ use InvalidArgumentException;
 
 class ValidationHelper
 {
-    public static function modelValidation($obj): void
+    public static function modelValidation($obj): array
     {
         $errors = [];
 
         // Validate ID
         if (empty($obj->id)) {
-            $errors[] = "Id cannot be blank.";
+            $errors['id'] = "Id cannot be blank.";
         }
 
         // Validate Name
         if (empty($obj->name)) {
-            $errors[] = "Name cannot be blank.";
+            $errors['name'] = "Name cannot be blank.";
         }
 
-        // If there are errors, throw an exception
-        if (!empty($errors)) {
-            throw new InvalidArgumentException(implode(" ", $errors));
+        // Validate Description
+        if (empty($obj->description)) {
+            $errors['description'] = "Description cannot be blank.";
         }
+
+        return $errors;
     }
 }

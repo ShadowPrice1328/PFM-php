@@ -1,7 +1,9 @@
 <?php
 
-//require_once(__DIR__ . '/../services/DatabaseService.php');
-//require_once(__DIR__ . '/../interfaces/ICategoriesService.php');
+require_once __DIR__ . "/../dtos/CategoryUpdateRequest.php";
+
+use dtos\CategoryUpdateRequest;
+use helpers\ValidationHelper;
 
 class CategoriesController
 {
@@ -59,6 +61,47 @@ class CategoriesController
         header('Content-Type: application/json');
         echo json_encode(['content' => $content, 'message' => $message]);
         exit; // Terminate the script
+    }
+
+    public function edit(string $id) : void
+    {
+        $category = $this->categoriesService->getCategoryByCategoryId($id);
+        $errors = [];
+
+        if (!$category)
+        {
+            include_once __DIR__ . '/../views/404.php';
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $name = trim($_POST['name']);
+            $description = trim($_POST['description']);
+            $id = $_POST['id'];
+
+            $categoryUpdateRequest = new CategoryUpdateRequest($id, $name, $description);
+
+            // Validate using ValidationHelper
+            $errors = ValidationHelper::modelValidation($categoryUpdateRequest);
+
+            if (empty($errors)) {
+                // Update the category if no validation errors
+                $updated = $this->categoriesService->updateCategory($categoryUpdateRequest);
+
+                if ($updated) {
+                    // Redirect to categories list on success
+                    header("Location: /categories");
+                    exit;
+                } else {
+                    var_dump($errors);
+
+                    $errors['summary'] = 'An error occurred while updating the category.';
+                }
+            }
+        }
+
+        include_once(__DIR__ . '/../views/categories/edit.php');
     }
 
 }

@@ -49,7 +49,9 @@ switch ($request) {
         $categoryName = $matches[1]; // The category name from the URL
         $categoriesController->search($categoryName);
         break;
-    default:
+    case $request === '/categories/edit' && isset($_GET['id']):
+        $categoriesController->edit($_GET['id']);
+        break;    default:
         http_response_code(404);
         require __DIR__ . '/../app/views/404.php';
 }
