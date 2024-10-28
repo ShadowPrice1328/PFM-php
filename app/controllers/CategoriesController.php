@@ -7,7 +7,6 @@ require_once __DIR__ . "/../dtos/CategoryAddRequest.php";
 
 use dtos\CategoryAddRequest;
 use dtos\CategoryUpdateRequest;
-use helpers\ValidationHelper;
 use interfaces\ICategoriesService;
 
 class CategoriesController
@@ -87,8 +86,7 @@ class CategoriesController
 
             $categoryUpdateRequest = new CategoryUpdateRequest($id, $name, $description);
 
-            // Validate using ValidationHelper
-            $errors = ValidationHelper::modelValidation($categoryUpdateRequest);
+            $errors = $categoryUpdateRequest->validate();
 
             if (empty($errors)) {
                 // Update the category if no validation errors
@@ -153,7 +151,7 @@ class CategoriesController
 
             $categoryAddRequest = new CategoryAddRequest($name, $description);
 
-            $errors = ValidationHelper::modelValidation($categoryAddRequest);
+            $errors = $categoryAddRequest->validate();
 
             if (empty($errors))
             {

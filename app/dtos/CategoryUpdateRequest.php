@@ -57,15 +57,15 @@ class CategoryUpdateRequest
         $errors = [];
 
         if (empty($this->id)) {
-            $errors[] = "Id cannot be blank.";
+            $errors['id'] = "Id cannot be blank.";
         }
 
         if (empty($this->name)) {
-            $errors[] = "Name cannot be blank.";
+            $errors['name'] = "Name cannot be blank.";
         }
 
-        if (!empty($errors)) {
-            throw new InvalidArgumentException(implode(", ", $errors));
+        if (empty($this->description)) {
+            $errors['description'] = "Description cannot be blank.";
         }
 
         return $errors;

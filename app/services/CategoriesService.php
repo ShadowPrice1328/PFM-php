@@ -4,14 +4,12 @@ namespace services;
 
 require_once __DIR__ . '/../dtos/CategoryResponse.php';
 require_once __DIR__ . '/../entities/Category.php';
-require_once __DIR__ . '/../helpers/ValidationHelper.php';
 
 use dtos\CategoryAddRequest;
 use dtos\CategoryExtensions;
 use dtos\CategoryResponse;
 use dtos\CategoryUpdateRequest;
 use entities\Category;
-use helpers\ValidationHelper;
 use interfaces\ICategoriesService;
 use InvalidArgumentException;
 use PDO;

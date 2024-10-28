@@ -2,6 +2,8 @@
 
 namespace interfaces;
 
+use dtos\TransactionAddRequest;
+
 interface ITransactionsService
 {
     /**
@@ -39,7 +41,7 @@ interface ITransactionsService
      * Removes transaction from database
      *
      * @param string|null $guid Id of transaction to remove
-     * @return bool True if success, false if error has occured
+     * @return bool True if success, false if error has occurred
      */
     public function deleteTransaction(?string $guid) : bool;
 
