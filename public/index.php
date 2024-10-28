@@ -6,6 +6,7 @@ ini_set('display_errors', 1);
 require_once(__DIR__ . '/../app/controllers/HomeController.php');
 require_once(__DIR__ . '/../app/controllers/CategoriesController.php');
 require_once(__DIR__ . '/../app/controllers/AuthController.php');
+require_once(__DIR__ . '/../app/controllers/TransactionsController.php');
 require_once(__DIR__ . '/../app/services/DatabaseService.php');
 require_once(__DIR__ . '/../app/services/CategoriesService.php');
 require_once(__DIR__ . '/../app/services/TransactionsService.php');
@@ -13,7 +14,9 @@ require_once(__DIR__ . '/../app/services/TransactionsService.php');
 use controllers\AuthController;
 use controllers\CategoriesController;
 use controllers\HomeController;
+use controllers\TransactionsController;
 use services\CategoriesService;
+use services\TransactionsService;
 
 // Ініціалізація сервісів
 $databaseService = new DatabaseService();
@@ -22,6 +25,7 @@ $transactionsService = new TransactionsService($databaseService->getPdo());
 
 $homeController = new HomeController($databaseService, $categoriesService, $transactionsService);
 $categoriesController = new CategoriesController($databaseService, $categoriesService);
+$transactionsController = new TransactionsController($databaseService, $transactionsService, $categoriesService);
 $authController = new AuthController();
 
 // Отримуємо шлях запиту без параметрів
@@ -68,6 +72,17 @@ switch ($request) {
         break;
     case $request === '/register':
         $authController->index();
+        break;
+    case $request === '/transactions':
+        $transactionsController->index();
+        break;
+    case $request === '/transactions/filter':
+        // Get the filterBy and filterString parameters from the request
+        $filterBy = $_GET['filterBy'] ?? null;  // Use GET to retrieve query parameters
+        $filterString = $_GET['filterString'] ?? null; // Optional filter string
+
+        // Call the filter_by method with the parameters
+        $transactionsController->filter($filterBy, $filterString);
         break;
     default:
         http_response_code(404);

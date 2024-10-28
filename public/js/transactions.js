@@ -8,12 +8,12 @@
         console.log(`Selected category: ${selectedCategory}`);
 
         $.ajax({
-            url: `Transactions/filter-by/${filterBy}/${selectedCategory}`,
+            url: `transactions/filter?filterBy=${filterBy}&filterString=${selectedCategory}`,
             method: 'GET',
-            success: function (transactions) {
+            success: function (response) {
                 console.log("Response received successfully");
 
-                $("#transactions-body").html(transactions);
+                $("#transactions-body").html(response.content);
                 $("#back-to-list").show();
             },
             error: function (error) {
