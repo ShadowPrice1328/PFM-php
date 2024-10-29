@@ -80,9 +80,17 @@ switch ($request) {
         // Get the filterBy and filterString parameters from the request
         $filterBy = $_GET['filterBy'] ?? null;  // Use GET to retrieve query parameters
         $filterString = $_GET['filterString'] ?? null; // Optional filter string
-
         // Call the filter_by method with the parameters
         $transactionsController->filter($filterBy, $filterString);
+        break;
+    case $request === '/transactions/edit' && isset($_GET['id']):
+        $transactionsController->edit($_GET['id']);
+        break;
+    case $request === '/transactions/details' && isset($_GET['id']):
+        $transactionsController->details($_GET['id']);
+        break;
+    case $request === '/transactions/delete' && isset($_GET['id']):
+        $transactionsController->delete($_GET['id']);
         break;
     default:
         http_response_code(404);

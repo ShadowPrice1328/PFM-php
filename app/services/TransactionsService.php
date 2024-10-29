@@ -54,7 +54,6 @@ class TransactionsService implements ITransactionsService
         }, $transactions);
     }
 
-
     public function getTransactionByTransactionId(?string $transactionId): ?TransactionResponse
     {
         if ($transactionId === null) {
@@ -63,9 +62,22 @@ class TransactionsService implements ITransactionsService
 
         $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE id = ?');
         $stmt->execute([$transactionId]);
-        $transaction = $stmt->fetch(PDO::FETCH_ASSOC);
+        $transactionData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $transaction ? TransactionExtensions::toTransactionResponse($transaction) : null;
+        if ($transactionData) {
+            $transaction = new Transaction();
+
+            $transaction->id = $transactionData['Id'];
+            $transaction->category = $transactionData['Category'];
+            $transaction->type = $transactionData['Type'];
+            $transaction->date = $transactionData['Date'];
+            $transaction->cost = new Decimal($transactionData['Cost']);
+            $transaction->description = $transactionData['Description'];
+
+            return TransactionExtensions::toTransactionResponse($transaction);
+        }
+
+        return null; // If no category is found
     }
 
     public function addTransaction(?TransactionAddRequest $request): TransactionResponse

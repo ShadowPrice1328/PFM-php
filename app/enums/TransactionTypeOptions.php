@@ -2,8 +2,8 @@
 
 namespace enums;
 
-enum TransactionTypeOptions
+enum TransactionTypeOptions: string
 {
-    case Expense;
-    case Revenue;
+    case Expense = "Expense";
+    case Revenue = "Revenue";
 }
