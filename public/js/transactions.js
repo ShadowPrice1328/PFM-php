@@ -12,7 +12,6 @@
             method: 'GET',
             success: function (response) {
                 console.log("Response received successfully");
-
                 $("#transactions-body").html(response.content);
                 $("#back-to-list").show();
             },

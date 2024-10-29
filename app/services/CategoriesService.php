@@ -44,9 +44,15 @@ class CategoriesService implements ICategoriesService
 
         $stmt = $this->pdo->prepare('SELECT * FROM categories WHERE id = ?');
         $stmt->execute([$categoryId]);
-        $category = $stmt->fetch(PDO::FETCH_ASSOC);
+        $categoryData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $category ? (new CategoryResponse($category['Id'], $category['Name'], $category['Description'])) : null;
+        if ($categoryData) {
+            $category = new Category($categoryData['Id'], $categoryData['Name'], $categoryData['Description']);
+
+            return CategoryExtensions::toCategoryResponse($category);
+        }
+
+        return null; // If no category is found
     }
 
     public function addCategory(?CategoryAddRequest $request): CategoryResponse
@@ -66,9 +72,8 @@ class CategoriesService implements ICategoriesService
         // Insert category into the database
         $stmt = $this->pdo->prepare('INSERT INTO categories (Id, Name, Description) VALUES (?, ?, ?)');
         $stmt->execute([$category->id, $category->name, $category->description]);
-        $categoryId = $this->pdo->lastInsertId();
 
-        return new CategoryResponse($categoryId, $request->name, $request->description);
+        return CategoryExtensions::toCategoryResponse($category);
     }
 
     public function updateCategory(CategoryUpdateRequest $request): CategoryResponse

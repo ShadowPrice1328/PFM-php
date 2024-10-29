@@ -62,7 +62,7 @@ ob_start();
                 <?= htmlspecialchars($transaction['Category']) ?>
             </td>
             <td>
-                <?= htmlspecialchars($transaction['Type']) ?>
+                <?= htmlspecialchars($transaction['Type'])?>
             </td>
             <td>
                 <?= htmlspecialchars($transaction['Cost']) ?>

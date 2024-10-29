@@ -5,21 +5,22 @@ namespace dtos;
 use entities\Transaction;
 use enums\TransactionTypeOptions;
 use models\Decimal;
-use models\Guid;
 
-class TransactionAddRequest
+class TransactionUpdateRequest
 {
+    public string $id;
     public ?string $category;
     public ?TransactionTypeOptions $type;
     public Decimal $cost;
     public string $date;
     public ?string $description;
 
-    public function __construct(?string $category, ?TransactionTypeOptions $type, ?string $cost, ?string $date, ?string $description)
+    public function __construct(string $id, string $category, TransactionTypeOptions $type, Decimal $cost, string $date, string $description)
     {
+        $this->id = $id;
         $this->category = $category;
         $this->type = $type;
-        $this->cost = new Decimal($cost);
+        $this->cost = $cost;
         $this->date = $date;
         $this->description = $description;
     }
@@ -28,7 +29,7 @@ class TransactionAddRequest
     {
         $transaction = new Transaction();
 
-        $transaction->id = Guid::createGUID();
+        $transaction->id = $this->id;
         $transaction->category = $this->category;
         $transaction->type = $this->type;
         $transaction->cost = $this->cost;
@@ -42,24 +43,23 @@ class TransactionAddRequest
     {
         $errors = [];
 
-        if (empty($this->category))
-        {
+        if (empty($this->id)) {
+            $errors['id'] = "Id is required";
+        }
+        if (empty($this->category)) {
             $errors['category'] = "Category is required";
         }
-        if (empty($this->type))
-        {
+        if (empty($this->type)) {
             $errors['type'] = "Type is required";
         }
-        if (empty($this->cost))
-        {
+        if (empty($this->cost)) {
             $errors['cost'] = "Cost is required";
         }
         if (preg_match("^\d+([.,]\d{1,2})?$", $this->cost) === 0)
         {
             $errors['cost-regex'] = "Invalid input";
         }
-        if (empty($this->date))
-        {
+        if (empty($this->date)) {
             $errors['date'] = "Date is required";
         }
 

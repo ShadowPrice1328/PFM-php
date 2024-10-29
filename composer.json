@@ -1,5 +1,6 @@
 {
   "require": {
-    "ext-bcmath": "*"
+    "ext-bcmath": "*",
+    "ext-pdo": "*"
   }
 }

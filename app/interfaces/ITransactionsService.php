@@ -3,6 +3,8 @@
 namespace interfaces;
 
 use dtos\TransactionAddRequest;
+use dtos\TransactionResponse;
+use dtos\TransactionUpdateRequest;
 
 interface ITransactionsService
 {
@@ -50,9 +52,9 @@ interface ITransactionsService
      *
      * @param string $filterBy
      * @param string|null $filterString
-     * @return array A list of filtered TransactionResponses
+     * @return array|TransactionResponse A list of filtered TransactionResponses
      */
-    public function getFilteredTransactions(string $filterBy, ?string $filterString) : array;
+    public function getFilteredTransactions(string $filterBy, ?string $filterString) : array|TransactionResponse;
 
     /**
      * Retrives all transaction made between two dates
