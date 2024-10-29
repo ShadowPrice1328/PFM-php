@@ -46,18 +46,7 @@ class TransactionsService implements ITransactionsService
         $transactionsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Transform the associative array into Transaction objects
-        $transactions = array_map(function ($transactionData) {
-            $transaction = new Transaction();
-
-            $transaction->id = $transactionData['Id'];
-            $transaction->category = $transactionData['Category'];
-            $transaction->type = $transactionData['Type'];
-            $transaction->cost = new Decimal($transactionData['Cost']);
-            $transaction->date = $transactionData['Date'];
-            $transaction->description = $transactionData['Description'];
-
-            return $transaction;
-        }, $transactionsData);
+        $transactions = $this->transformTheAssociativeArrayIntoTransactionObjects($transactionsData);
 
         // Transform Transaction objects into TransactionResponse objects
         return array_map(function (Transaction $transaction) {
@@ -95,16 +84,57 @@ class TransactionsService implements ITransactionsService
 
     public function updateTransaction(?TransactionUpdateRequest $request): TransactionResponse
     {
-        // TODO: Implement updateTransaction() method.
+        $stmt = $this->pdo->prepare('UPDATE transactions SET category = ?, type = ?, cost = ?, date = ?, description = ? WHERE id = ?');
+        $stmt->execute([$request->category, $request->type, $request->cost, $request->date, $request->description, $request->id]);
+
+        return $this->getTransactionByTransactionId($request->id);
     }
 
     public function deleteTransaction(?string $guid): bool
     {
-        // TODO: Implement deleteTransaction() method.
-    }
+        if ($guid === null) {
+            throw new InvalidArgumentException("GUID cannot be null.");
+        }
+
+        // Delete transaction from the database
+        $stmt = $this->pdo->prepare('DELETE FROM transactions WHERE id = ?');
+        return $stmt->execute([$guid]);    }
 
     public function getTransactionBetweenTwoDates(?string $startDate, ?string $endDate): array
     {
-        // TODO: Implement getTransactionBetweenTwoDates() method.
+        if ($startDate === null || $endDate === null) {
+            throw new InvalidArgumentException("Start date and end date cannot be null.");
+        }
+
+        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE date BETWEEN ? AND ?');
+        $stmt->execute([$startDate, $endDate]);
+
+        $transactionsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $transactions = $this->transformTheAssociativeArrayIntoTransactionObjects($transactionsData);
+
+        return array_map(function (Transaction $transaction) {
+            return TransactionExtensions::toTransactionResponse($transaction);
+        }, $transactions);
+    }
+
+    /**
+     * @param bool|array $transactionsData
+     * @return Transaction[]
+     */
+    public function transformTheAssociativeArrayIntoTransactionObjects(bool|array $transactionsData): array
+    {
+        $transactions = array_map(function ($transactionData) {
+            $transaction = new Transaction();
+
+            $transaction->id = $transactionData['Id'];
+            $transaction->category = $transactionData['Category'];
+            $transaction->type = $transactionData['Type'];
+            $transaction->cost = new Decimal($transactionData['Cost']);
+            $transaction->date = $transactionData['Date'];
+            $transaction->description = $transactionData['Description'];
+
+            return $transaction;
+        }, $transactionsData);
+        return $transactions;
     }
 }
