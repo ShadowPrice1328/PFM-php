@@ -11,6 +11,7 @@ use dtos\TransactionExtensions;
 use dtos\TransactionResponse;
 use dtos\TransactionUpdateRequest;
 use entities\Transaction;
+use enums\TransactionTypeOptions;
 use interfaces\ITransactionsService;
 use InvalidArgumentException;
 use models\Decimal;
@@ -97,7 +98,7 @@ class TransactionsService implements ITransactionsService
     public function updateTransaction(?TransactionUpdateRequest $request): TransactionResponse
     {
         $stmt = $this->pdo->prepare('UPDATE transactions SET category = ?, type = ?, cost = ?, date = ?, description = ? WHERE id = ?');
-        $stmt->execute([$request->category, $request->type, $request->cost, $request->date, $request->description, $request->id]);
+        $stmt->execute([$request->category, $request->type->name, $request->cost, $request->date, $request->description, $request->id]);
 
         return $this->getTransactionByTransactionId($request->id);
     }

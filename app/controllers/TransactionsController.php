@@ -3,6 +3,9 @@
 namespace controllers;
 
 require_once __DIR__ . "/../viewmodels/TransactionViewModel.php";
+require_once __DIR__ . "/../dtos/TransactionUpdateRequest.php";
+require_once __DIR__ . "/../enums/TransactionTypeOptions.php";
+
 
 use DatabaseService;
 use dtos\TransactionUpdateRequest;
@@ -103,5 +106,18 @@ class TransactionsController
         }
 
         include_once(__DIR__ . '/../views/transactions/edit.php');
+    }
+
+    public function details(string $id) : void
+    {
+        $transaction = $this->transactionService->getTransactionByTransactionId($id);
+
+        if (!$transaction)
+        {
+            include_once __DIR__ . '/../views/404.php';
+            return;
+        }
+
+        include_once(__DIR__ . '/../views/transactions/details.php');
     }
 }

@@ -55,7 +55,7 @@ class TransactionUpdateRequest
         if (empty($this->cost)) {
             $errors['cost'] = "Cost is required";
         }
-        if (preg_match("^\d+([.,]\d{1,2})?$", $this->cost) === 0)
+        if (preg_match("^\d+([.,]\d{1,2})?$^", $this->cost) === 0)
         {
             $errors['cost-regex'] = "Invalid input";
         }
