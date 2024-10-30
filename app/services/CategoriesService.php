@@ -78,9 +78,18 @@ class CategoriesService implements ICategoriesService
 
     public function updateCategory(CategoryUpdateRequest $request): CategoryResponse
     {
+        // Getting old category name from database
+        $stmt = $this->pdo->prepare('SELECT Name FROM Categories WHERE Id = ?');
+        $stmt->execute([$request->id]);
+        $old_category_name = $stmt->fetchColumn();
+
         // Update the category in the database
         $stmt = $this->pdo->prepare('UPDATE categories SET name = ?, description = ? WHERE id = ?');
         $stmt->execute([$request->name, $request->description, $request->id]);
+
+        // Update the transactions table to match the new category name
+        $stmt = $this->pdo->prepare('UPDATE transactions SET category = ? WHERE category = ?');
+        $stmt->execute([$request->name, $old_category_name]);
 
         return new CategoryResponse($request->id, $request->name, $request->description);
     }
