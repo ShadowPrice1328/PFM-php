@@ -1,44 +1,50 @@
 <?php
-    $pageTitle = "Edit Transaction";
+    $pageTitle = "Create new Transaction";
     $authenticated = false;
-
     ob_start();
 ?>
 
 <div class="container">
     <div class="crud-form" id="transactions">
         <div class="form-head">
-            <h1>Edit</h1>
-            <i class="fa-solid fa-pen-to-square"></i>
+            <h1>Create</h1>
+            <i class="fa-solid fa-circle-plus"></i>
         </div>
-        <form autocomplete="off" method="post">
+        <form method="post" autocomplete="off">
             <?php if (!empty($errors['summary'])): ?>
                 <div class="text-bad"><?= htmlspecialchars($errors['summary']) ?></div>
             <?php endif; ?>
-
-            <input type="hidden" name="id" value="<?= htmlspecialchars($transaction->id)?>"/>
             <div class="form-group">
-                <label for="category" class="control-label">Category</label>
+                <label for="category">Category</label>
                 <div class="select-wrapper">
-                    <label>
-                        <select name="category" class="form-control">
-                            <?php foreach ($category_names as $category_name): ?>
-                                <option value="<?php echo htmlspecialchars($category_name); ?>"><?php echo htmlspecialchars($category_name); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </label>
+                    <?php if (!empty($category_names)) : ?>
+                        <label>
+                            <select name="category" class="form-control">
+                                <?php foreach ($category_names as $category_name): ?>
+                                    <option value="<?= htmlspecialchars($category_name)?>"><?= htmlspecialchars($category_name)?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </label>
+                    <?php else: ?>
+                        <label>
+                            <select name="category" class="form-control" disabled>
+                                <option value="">No categories available</option>
+                            </select>
+                        </label>
+                    <?php endif;?>
                 </div>
-                    <?php if (!empty($errors['category'])): ?>
-                        <span class="text-bad"><?= htmlspecialchars($errors['category']) ?></span>
-                    <?php endif; ?>
-                </div>
+
+                <?php if (!empty($errors['category'])): ?>
+                    <span class="text-bad"><?= htmlspecialchars($errors['category']) ?></span>
+                <?php endif; ?>
+            </div>
             <div class="form-group">
                 <label for="type" class="control-label">Type</label>
                 <div class="select-wrapper">
                     <label>
                         <select name="type" class="form-control">
-                            <option value="Expense" <?= $transaction->type === "Expense" ? 'selected' : '' ?>>Expense</option>
-                            <option value="Revenue" <?= $transaction->type === "Revenue" ? 'selected' : '' ?>>Revenue</option>
+                            <option value="Expense" selected>Expense</option>
+                            <option value="Revenue">Revenue</option>
                         </select>
                     </label>
                 </div>
@@ -47,9 +53,9 @@
                 <?php endif; ?>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="position: relative;">
                 <label for="cost" class="control-label">Cost
-                    <input name="cost" class="form-control" value="<?= htmlspecialchars($transaction->cost) ?>"/>
+                    <input name="cost" class="form-control" />
                 </label>
                 <?php if (!empty($errors['cost'])): ?>
                     <span class="text-bad"><?= htmlspecialchars($errors['cost']) ?></span>
@@ -57,8 +63,8 @@
             </div>
             <div class="form-group">
                 <label for="date" class="control-label">Date
-                    <input name="date" type="date" max="<?php echo date('Y-m-d'); ?>" class="form-control"
-                           value="<?= htmlspecialchars((new DateTime($transaction->date))->format('Y-m-d')) ?>"
+                    <input name="date" type="date" max="<?=htmlspecialchars(date('Y-m-d')) ?>"
+                           class="form-control" value="<?=htmlspecialchars(date('Y-m-d')) ?>" />
                 </label>
                 <?php if (!empty($errors['date'])): ?>
                     <span class="text-bad"><?= htmlspecialchars($errors['date']) ?></span>
@@ -66,14 +72,14 @@
             </div>
             <div class="form-group">
                 <label for="description" class="control-label">Description
-                    <input name="description" class="form-control" value="<?= htmlspecialchars($transaction->description)?>"/>
+                    <input name="description" class="form-control" />
                 </label>
                 <?php if (!empty($errors['description'])): ?>
                     <span class="text-bad"><?= htmlspecialchars($errors['description']) ?></span>
                 <?php endif; ?>
             </div>
             <div class="form-group btn-group">
-                <input type="submit" value="Save" class="btn btn-create" />
+                <input type="submit" value="Create" class="btn btn-create" />
                 <a href="/transactions" class="btn btn-custom">Back</a>
             </div>
         </form>
@@ -82,5 +88,5 @@
 
 <?php
     $content = ob_get_clean();
-    include_once __DIR__ . "/../layouts/layout.php";
+    include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
 ?>

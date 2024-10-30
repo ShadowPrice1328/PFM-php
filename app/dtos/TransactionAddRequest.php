@@ -2,6 +2,8 @@
 
 namespace dtos;
 
+require_once __DIR__ . "/../models/Guid.php";
+
 use entities\Transaction;
 use enums\TransactionTypeOptions;
 use models\Decimal;
@@ -30,7 +32,7 @@ class TransactionAddRequest
 
         $transaction->id = Guid::createGUID();
         $transaction->category = $this->category;
-        $transaction->type = $this->type;
+        $transaction->type = $this->type->value;
         $transaction->cost = $this->cost;
         $transaction->date = $this->date;
         $transaction->description = $this->description;
@@ -54,7 +56,7 @@ class TransactionAddRequest
         {
             $errors['cost'] = "Cost is required";
         }
-        if (preg_match("^\d+([.,]\d{1,2})?$", $this->cost) === 0)
+        if (preg_match("^\d+([.,]\d{1,2})?$^", $this->cost) === 0)
         {
             $errors['cost-regex'] = "Invalid input";
         }

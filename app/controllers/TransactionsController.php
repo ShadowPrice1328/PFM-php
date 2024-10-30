@@ -4,10 +4,12 @@ namespace controllers;
 
 require_once __DIR__ . "/../viewmodels/TransactionViewModel.php";
 require_once __DIR__ . "/../dtos/TransactionUpdateRequest.php";
+require_once __DIR__ . "/../dtos/TransactionAddRequest.php";
 require_once __DIR__ . "/../enums/TransactionTypeOptions.php";
 
 
 use DatabaseService;
+use dtos\TransactionAddRequest;
 use dtos\TransactionUpdateRequest;
 use enums\TransactionTypeOptions;
 use interfaces\ICategoriesService;
@@ -143,5 +145,32 @@ class TransactionsController
         }
 
         include_once(__DIR__ . '/../views/transactions/delete.php');
+    }
+
+    public function create() : void
+    {
+        $category_names = $this->transactionService->getCategoryNamesOfTransactions();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $category = trim($_POST['category']);
+            $type = TransactionTypeOptions::from(trim($_POST['type']));
+            $cost = new Decimal(trim($_POST['cost']));
+            $date = trim($_POST['date']);
+            $description = trim($_POST['description']);
+
+            $request = new TransactionAddRequest($category, $type, $cost, $date, $description);
+
+            $error = $request->validate();
+
+            if (empty($errors))
+            {
+                $this->transactionService->addTransaction($request);
+                header("Location: /transactions");
+                exit;
+            }
+        }
+
+        include_once __DIR__ . '/../views/transactions/create.php';
     }
 }

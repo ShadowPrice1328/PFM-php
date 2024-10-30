@@ -76,6 +76,9 @@ switch ($request) {
     case $request === '/transactions':
         $transactionsController->index();
         break;
+    case $request === '/transactions/create':
+        $transactionsController->create();
+        break;
     case $request === '/transactions/filter':
         // Get the filterBy and filterString parameters from the request
         $filterBy = $_GET['filterBy'] ?? null;  // Use GET to retrieve query parameters
