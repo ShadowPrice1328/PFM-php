@@ -120,4 +120,28 @@ class TransactionsController
 
         include_once(__DIR__ . '/../views/transactions/details.php');
     }
+
+    public function delete(string $id) : void
+    {
+        $transaction = $this->transactionService->getTransactionByTransactionId($id);
+
+        if (!$transaction)
+        {
+            include_once __DIR__ . '/../views/404.php';
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $deleted = $this->transactionService->deleteTransaction($id);
+
+            if ($deleted)
+            {
+                header("Location: /transactions");
+                exit;
+            }
+        }
+
+        include_once(__DIR__ . '/../views/transactions/delete.php');
+    }
 }
