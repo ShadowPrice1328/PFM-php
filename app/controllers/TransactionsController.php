@@ -160,8 +160,7 @@ class TransactionsController
             $description = trim($_POST['description']);
 
             $request = new TransactionAddRequest($category, $type, $cost, $date, $description);
-
-            $error = $request->validate();
+            $errors = $request->validate();
 
             if (empty($errors))
             {

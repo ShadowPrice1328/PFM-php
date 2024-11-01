@@ -6,6 +6,7 @@ require_once __DIR__ . '/../dtos/TransactionResponse.php';
 require_once __DIR__ . '/../entities/Transaction.php';
 require_once __DIR__ . '/../models/Decimal.php';
 
+use Cassandra\Date;
 use dtos\TransactionAddRequest;
 use dtos\TransactionExtensions;
 use dtos\TransactionResponse;
@@ -37,7 +38,7 @@ class TransactionsService implements ITransactionsService
     public function getCategoryNamesOfTransactions() : array
     {
         $stmt = $this->pdo->query('SELECT Category FROM transactions');
-        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return array_unique($stmt->fetchAll(PDO::FETCH_COLUMN));
     }
 
     public function getFilteredTransactions(string $filterBy, ?string $filterString): array {
@@ -113,14 +114,14 @@ class TransactionsService implements ITransactionsService
         $stmt = $this->pdo->prepare('DELETE FROM transactions WHERE id = ?');
         return $stmt->execute([$guid]);    }
 
-    public function getTransactionBetweenTwoDates(?string $startDate, ?string $endDate): array
+    public function getTransactionBetweenTwoDates(?\DateTime $startDate, ?\DateTime $endDate): array
     {
         if ($startDate === null || $endDate === null) {
             throw new InvalidArgumentException("Start date and end date cannot be null.");
         }
 
         $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE date BETWEEN ? AND ?');
-        $stmt->execute([$startDate, $endDate]);
+        $stmt->execute([$startDate->format('Y-m-d'), $endDate->format('Y-m-d')]);
 
         $transactionsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $transactions = $this->transformTheAssociativeArrayIntoTransactionObjects($transactionsData);

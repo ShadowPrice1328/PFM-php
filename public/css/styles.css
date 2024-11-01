@@ -85,6 +85,12 @@ body::before {
     overflow: hidden;
 }
 
+.form-box#chart {
+    right: 0;
+    margin-right: 20rem;
+    margin-top: 3rem;
+}
+
 .crud-form {
     right: 0;
     overflow: hidden;

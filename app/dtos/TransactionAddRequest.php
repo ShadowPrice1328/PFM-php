@@ -48,6 +48,10 @@ class TransactionAddRequest
         {
             $errors['category'] = "Category is required";
         }
+        if (empty($this->description))
+        {
+            $errors['description'] = "Description is required.";
+        }
         if (empty($this->type))
         {
             $errors['type'] = "Type is required";
@@ -55,6 +59,9 @@ class TransactionAddRequest
         if (empty($this->cost))
         {
             $errors['cost'] = "Cost is required";
+        }
+        if ($this->cost->__toString() === "0.00") {
+            $errors['cost'] = "Cost must be greater than 0.00.";
         }
         if (preg_match("^\d+([.,]\d{1,2})?$^", $this->cost) === 0)
         {

@@ -2,6 +2,7 @@
 
 namespace interfaces;
 
+use DateTime;
 use dtos\TransactionAddRequest;
 use dtos\TransactionResponse;
 use dtos\TransactionUpdateRequest;
@@ -59,11 +60,11 @@ interface ITransactionsService
     /**
      * Retrives all transaction made between two dates
      *
-     * @param string|null $startDate
-     * @param string|null $endDate
+     * @param DateTime|null $startDate
+     * @param DateTime|null $endDate
      * @return array A list of selected TransactionResponses
      */
-    public function getTransactionBetweenTwoDates(?string $startDate, ?string $endDate) : array;
+    public function getTransactionBetweenTwoDates(?DateTime $startDate, ?DateTime $endDate) : array;
 
     /**
      * Retrives all categories names of present transactions

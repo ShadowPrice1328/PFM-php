@@ -7,25 +7,32 @@ require_once(__DIR__ . '/../app/controllers/HomeController.php');
 require_once(__DIR__ . '/../app/controllers/CategoriesController.php');
 require_once(__DIR__ . '/../app/controllers/AuthController.php');
 require_once(__DIR__ . '/../app/controllers/TransactionsController.php');
+require_once(__DIR__ . '/../app/controllers/ReportsController.php');
 require_once(__DIR__ . '/../app/services/DatabaseService.php');
 require_once(__DIR__ . '/../app/services/CategoriesService.php');
 require_once(__DIR__ . '/../app/services/TransactionsService.php');
+require_once(__DIR__ . '/../app/services/ReportsService.php');
+
 
 use controllers\AuthController;
 use controllers\CategoriesController;
 use controllers\HomeController;
+use controllers\ReportsController;
 use controllers\TransactionsController;
 use services\CategoriesService;
+use services\ReportsService;
 use services\TransactionsService;
 
 // Ініціалізація сервісів
 $databaseService = new DatabaseService();
 $categoriesService = new CategoriesService($databaseService->getPdo());
 $transactionsService = new TransactionsService($databaseService->getPdo());
+$reportsService = new ReportsService($transactionsService);
 
 $homeController = new HomeController($databaseService, $categoriesService, $transactionsService);
 $categoriesController = new CategoriesController($databaseService, $categoriesService);
 $transactionsController = new TransactionsController($databaseService, $transactionsService, $categoriesService);
+$reportsController = new ReportsController($databaseService, $categoriesService, $transactionsService, $reportsService);
 $authController = new AuthController();
 
 // Отримуємо шлях запиту без параметрів
@@ -94,6 +101,9 @@ switch ($request) {
         break;
     case $request === '/transactions/delete' && isset($_GET['id']):
         $transactionsController->delete($_GET['id']);
+        break;
+    case $request === '/overview':
+        $reportsController->overview();
         break;
     default:
         http_response_code(404);

@@ -8,11 +8,11 @@ class Decimal
 {
     private string $value; // Store value as a string for precision
 
-    public function __construct(string $value)
+    public function __construct(string $value = '0.00')
     {
-        // Optionally validate the value to ensure it is a valid decimal
-        if (!preg_match('/^\d+(\.\d{1,2})?$/', $value)) {
-            throw new InvalidArgumentException("Invalid decimal value.");
+        // Validate the value to ensure it is a valid decimal, defaulting to 0.00 if empty or invalid
+        if (empty($value) || !preg_match('/^\d+(\.\d{1,2})?$/', $value)) {
+            $value = '0.00';
         }
         $this->value = $value;
     }
