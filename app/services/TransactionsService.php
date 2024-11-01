@@ -41,6 +41,30 @@ class TransactionsService implements ITransactionsService
         return array_unique($stmt->fetchAll(PDO::FETCH_COLUMN));
     }
 
+    public function getFirstTransaction() : TransactionResponse
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM transactions ORDER BY Date ASC LIMIT 1');
+        $stmt->execute();
+
+        // Fetch the result as an associative array
+        $transactionData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if a transaction was found
+        if ($transactionData) {
+            // Create and return a TransactionResponse object
+            $response = new TransactionResponse();
+
+            $response->id = $transactionData['Id'];
+            $response->category = $transactionData['Category'];
+            $response->type = $transactionData['Type'];
+            $response->cost = new Decimal($transactionData['Cost']);
+            $response->date = $transactionData['Date'];
+            $response->description = $transactionData['Description'];
+
+            return $response;
+        }
+    }
+
     public function getFilteredTransactions(string $filterBy, ?string $filterString): array {
         // Sample SQL query based on the filter
         $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE ' . $filterBy . ' LIKE ?');

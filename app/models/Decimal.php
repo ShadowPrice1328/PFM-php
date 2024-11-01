@@ -17,6 +17,11 @@ class Decimal
         $this->value = $value;
     }
 
+    public function getValue()
+    {
+        return $this->value;
+    }
+
     public function __toString(): string
     {
         return $this->value; // Convert to string for display

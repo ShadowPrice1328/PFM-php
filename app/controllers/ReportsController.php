@@ -5,6 +5,7 @@ namespace controllers;
 require_once __DIR__ . "/../dtos/GenerateReportRequest.php";
 
 use DatabaseService;
+use DateTime;
 use dtos\GenerateReportRequest;
 use interfaces\ICategoriesService;
 use interfaces\IReportsService;
@@ -54,6 +55,17 @@ class ReportsController
             $request->type = $_POST['type'];
 
             $model = $this->reportsService->generateReport($request, $withCategory);
+        }
+        else
+        {
+            $request = new GenerateReportRequest();
+
+            $request->firstDate = new DateTime($this->transactionsService->getFirstTransaction()->date);
+
+            $request->lastDate = new DateTime('now');
+            $request->type = "Expense";
+
+            $model = $this->reportsService->generateReport($request, false);
         }
 
         $category_names = $this->transactionsService->getCategoryNamesOfTransactions();

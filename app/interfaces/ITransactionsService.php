@@ -66,6 +66,7 @@ interface ITransactionsService
      */
     public function getTransactionBetweenTwoDates(?DateTime $startDate, ?DateTime $endDate) : array;
 
+    public function getFirstTransaction() : TransactionResponse;
     /**
      * Retrives all categories names of present transactions
      *

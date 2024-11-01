@@ -2,6 +2,14 @@
     $pageTitle = 'Overview';
     $authenticated = false;
     ob_start();
+
+    if (isset($model))
+    {
+        $categoryCosts = [];
+        foreach ($model->categoryCosts as $category => $decimalObj) {
+            $categoryCosts[$category] = $decimalObj->getValue();  // Access the private value through the getter
+        }
+    }
 ?>
 
 <div class="container">
@@ -79,33 +87,36 @@
         <canvas id="pieChart"></canvas>
     </div>
 </div>
-
 <?php
     $content = ob_get_clean();
     include_once(__DIR__ . '/../../views/layouts/layout.php');
 ?>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 
-    var categoryCosts = @Html.Raw(Json.Serialize(Model.CategoryCosts));
+    let categoryCosts = <?= json_encode($categoryCosts) ?>;
+    console.log(categoryCosts);
 
-    var labels = Object.keys(categoryCosts);
-    var values = Object.values(categoryCosts);
+    let labels = Object.keys(categoryCosts);
 
-    var colors = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e', '#16a085', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50'];
+    let values = Object.values(categoryCosts).map(Number);
+    console.log(values);
 
-    var backgroundColors = [];
-    var borderColors = [];
+    let colors = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e', '#16a085', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50'];
 
-    for (var i = 0; i < labels.length; i++) {
-        var colorIndex = i % colors.length;
+    let backgroundColors = [];
+    let borderColors = [];
+
+    for (let i = 0; i < labels.length; i++) {
+        let colorIndex = i % colors.length;
         backgroundColors.push(colors[colorIndex]);
         borderColors.push(colors[colorIndex]);
     }
 
-    var ctx = document.getElementById('pieChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    let ctx = document.getElementById('pieChart').getContext('2d');
+    let myChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: labels,
