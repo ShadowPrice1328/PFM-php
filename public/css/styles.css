@@ -5,13 +5,13 @@ body {
     position: relative;
     height: 100%;
     margin: 0;
-    font-family: Bahnschrift;
-    overflow: hidden;
-    overflow-x: hidden;
+    font-family: Bahnschrift, serif;
+    /*overflow: hidden;*/
 }
 
 main {
     padding:0 20px 0 20px !important;
+    overflow-y: auto;
 }
 
 body::before {
