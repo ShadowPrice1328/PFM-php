@@ -55,6 +55,8 @@ class ReportsController
             $request->type = $_POST['type'];
 
             $model = $this->reportsService->generateReport($request, $withCategory);
+            $chartTitle = $model->type . " from " . $model->firstDate->format('Y-m-d') .
+                " to " . $model->lastDate->format('Y-m-d');
         }
         else
         {
@@ -66,6 +68,7 @@ class ReportsController
             $request->type = "Expense";
 
             $model = $this->reportsService->generateReport($request, false);
+            $chartTitle = "Overall";
         }
 
         $category_names = $this->transactionsService->getCategoryNamesOfTransactions();

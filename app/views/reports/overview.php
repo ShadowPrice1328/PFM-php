@@ -83,8 +83,20 @@
             </div>
         </form>
     </div>
+
     <div>
-        <canvas id="pieChart"></canvas>
+        <?php if (!empty($categoryCosts)) : ?>
+            <div class="chart-title">
+                <h2><?= htmlspecialchars($chartTitle) ?></h2>
+            </div>
+        <?php endif;?>
+        <div>
+            <?php if (empty($categoryCosts)): ?>
+                <p>No transactions available for the selected date range.</p>
+            <?php else: ?>
+                <canvas id="pieChart"></canvas>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 <?php
@@ -98,6 +110,10 @@
 
     let categoryCosts = <?= json_encode($categoryCosts) ?>;
     console.log(categoryCosts);
+
+    if (categoryCosts.length === 0){
+
+    }
 
     let labels = Object.keys(categoryCosts);
 

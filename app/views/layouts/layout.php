@@ -36,7 +36,7 @@
 
 <footer class="text-muted">
     <div class="text-center">
-        &copy; 2023 - <?php echo date("Y");?> Personal Finance Manager
+        &copy; Personal Finance Manager <?php echo date("Y");?>
     </div>
 </footer>
 </body>

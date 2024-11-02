@@ -87,8 +87,12 @@ body::before {
 
 .form-box#chart {
     right: 0;
-    margin-right: 20rem;
+    margin-right: 10rem;
     margin-top: 3rem;
+}
+
+.chart-title{
+    text-align: center;
 }
 
 .crud-form {
