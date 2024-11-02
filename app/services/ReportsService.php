@@ -34,7 +34,9 @@ class ReportsService implements IReportsService
 
         $selectedTransactions = $this->transactionsService->getTransactionBetweenTwoDates($report->firstDate, $report->lastDate);
 
-        //TO DO: filter by type
+        $selectedTransactions = array_filter($selectedTransactions, function ($transaction) use ($model) {
+            return $transaction->type === $model->type;
+        });
 
         if ($withCategory)
         {

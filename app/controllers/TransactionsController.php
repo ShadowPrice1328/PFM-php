@@ -149,7 +149,7 @@ class TransactionsController
 
     public function create() : void
     {
-        $category_names = $this->transactionService->getCategoryNamesOfTransactions();
+        $category_names = $this->categoriesService->getCategoryNames();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {

@@ -97,6 +97,11 @@
                 <canvas id="pieChart"></canvas>
             <?php endif; ?>
         </div>
+        <?php if (!empty($categoryCosts)) : ?>
+            <div class="chart-sum">
+                <h3>Sum: <?= htmlspecialchars(array_sum($categoryCosts)) ?></h3>
+            </div>
+        <?php endif;?>
     </div>
 </div>
 <?php
@@ -110,10 +115,6 @@
 
     let categoryCosts = <?= json_encode($categoryCosts) ?>;
     console.log(categoryCosts);
-
-    if (categoryCosts.length === 0){
-
-    }
 
     let labels = Object.keys(categoryCosts);
 

@@ -95,6 +95,10 @@ body::before {
     text-align: center;
 }
 
+.chart-sum{
+    text-align: center;
+}
+
 .crud-form {
     right: 0;
     overflow: hidden;
