@@ -1,13 +1,13 @@
 <?php
-    $pageTitle = 'Overview';
+    $pageTitle = "Daily Report";
     $authenticated = false;
-    ob_start();
 
-?>
+    ob_start();
+    ?>
 
 <div class="container">
-    <div class="form-box" id="chart" >
-        <h1>Generate pie chart <i class="fa-solid fa-chart-pie"></i></h1>
+    <div class="form-box" id="chart">
+        <h1>Generate line chart <i class="fa-solid fa-chart-line"></i></h1>
 
         <form autocomplete="off" method="post">
             <?php if (!empty($errors['summary'])): ?>
@@ -78,68 +78,110 @@
     </div>
 
     <div>
-        <?php if (!empty($categoryCosts)) : ?>
+        <?php if (!empty($costsByDate)) : ?>
             <div class="chart-title">
                 <h2><?= htmlspecialchars($chartTitle) ?></h2>
             </div>
         <?php endif;?>
         <div>
-            <?php if (empty($categoryCosts)): ?>
+            <?php if (empty($costsByDate)): ?>
                 <p>No transactions available for the selected date range.</p>
             <?php else: ?>
-                <canvas id="pieChart"></canvas>
+                <canvas id="lineChart"></canvas>
             <?php endif; ?>
         </div>
-        <?php if (!empty($categoryCosts)) : ?>
+        <?php if (!empty($costsByDate)) : ?>
             <div class="chart-sum">
-                <h3>Sum: <?= htmlspecialchars(array_sum($categoryCosts)) ?></h3>
+                <h3>Sum: <?= htmlspecialchars(array_sum($costsByDate)) ?></h3>
             </div>
         <?php endif;?>
     </div>
 </div>
+
 <?php
     $content = ob_get_clean();
-    include_once(__DIR__ . '/../../views/layouts/layout.php');
+    include_once __DIR__ . '/../layouts/layout.php';
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 
 <script>
+    let costsByDate = <?= json_encode($costsByDate ?? []) ?>;
+    let categoryCostsByDate = <?= json_encode($categoryCostsByDate ?? []) ?>;
 
-    let categoryCosts = <?= json_encode($categoryCosts) ?>;
-    console.log(categoryCosts);
+    // Extract dates and total costs
+    let dates = Object.keys(costsByDate);
 
-    let labels = Object.keys(categoryCosts);
+    let costs = Object.values(costsByDate).map(Number); // Make sure these are numbers
 
-    let values = Object.values(categoryCosts).map(Number);
-    console.log(values);
+    let type = <?= json_encode($model->type) ?>;
 
-    let colors = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#34495e', '#16a085', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50'];
-
-    let backgroundColors = [];
-    let borderColors = [];
-
-    for (let i = 0; i < labels.length; i++) {
-        let colorIndex = i % colors.length;
-        backgroundColors.push(colors[colorIndex]);
-        borderColors.push(colors[colorIndex]);
-    }
-
-    let ctx = document.getElementById('pieChart').getContext('2d');
-    let myChart = new Chart(ctx, {
-        type: 'pie',
+    // Initialize the line chart
+    let ctx = document.getElementById('lineChart').getContext('2d');
+    let chart = new Chart(ctx, {
+        type: 'line',
         data: {
-            labels: labels,
+            labels: dates,
             datasets: [{
-                data: values,
-                backgroundColor: backgroundColors,
-                borderColor: borderColors,
-                borderWidth: 1
+                label: `Daily ${type}s`,
+                data: costs,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
+            title: {
+                display: true,
+                text: `Day-by-Day ${type}s`
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Costs'
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            // Get the date from the tooltip item
+                            let date = tooltipItems[0].label;
+                            return date;
+                        },
+                        label: function(tooltipItem) {
+                            let date = tooltipItem.label;
+                            let totalCost = costsByDate[date]; // Total cost for the date
+                            let categories = categoryCostsByDate[date];
+
+                            // Create the tooltip label
+                            let labels = [];
+                            for (const [category, cost] of Object.entries(categories)) {
+                                labels.push(`${category}: ${cost}`);
+                            }
+
+                            // Add the total cost summary at the end
+                            return [...labels, `Sum: ${totalCost}`];
+                        }
+                    }
+                }
+            }
         }
     });
 </script>
+
+
+

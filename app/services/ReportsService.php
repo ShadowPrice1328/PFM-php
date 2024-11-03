@@ -50,12 +50,19 @@ class ReportsService implements IReportsService
         foreach ($selectedTransactions as $transaction) {
             if ($transaction->category) {
                 $category = $transaction->category;
-                $cost = $transaction->cost;
 
+                // Convert cost to a numeric value
+                $costValue = $transaction->cost instanceof Decimal ? (string)$transaction->cost->getValue() : (string)$transaction->cost;
+
+                // Initialize category cost if it doesn't exist
                 if (!isset($categoryCosts[$category])) {
                     $categoryCosts[$category] = new Decimal('0.00');
                 }
-                $categoryCosts[$category] = $categoryCosts[$category]->add(new Decimal((string)$cost));
+                // Add the cost to the category total
+                $categoryCosts[$category] = $categoryCosts[$category]->add(new Decimal($costValue));
+
+                // Also add the transaction to the response with the cost as a numeric value
+                $transaction->cost = new Decimal($costValue); // Update transaction's cost to a numeric value
             }
         }
 

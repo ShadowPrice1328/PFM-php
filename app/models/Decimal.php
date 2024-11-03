@@ -17,9 +17,13 @@ class Decimal
         $this->value = $value;
     }
 
-    public function getValue()
-    {
+    public function getValue(): string {
         return $this->value;
+    }
+
+    // Optionally, you can add a method to return the float value
+    public function toFloat(): float {
+        return (float)$this->value;
     }
 
     public function __toString(): string

@@ -105,6 +105,9 @@ switch ($request) {
     case $request === '/overview':
         $reportsController->overview();
         break;
+    case $request === '/daily':
+        $reportsController->daily();
+        break;
     default:
         http_response_code(404);
         require __DIR__ . '/../app/views/404.php';

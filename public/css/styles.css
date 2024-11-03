@@ -99,6 +99,11 @@ body::before {
     text-align: center;
 }
 
+#lineChart {
+    min-height: 20rem;
+    min-width: 30rem;
+}
+
 .crud-form {
     right: 0;
     overflow: hidden;
