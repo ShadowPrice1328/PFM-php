@@ -161,13 +161,11 @@ body::before {
     align-items: center;
     gap: 0.5rem;
     justify-content: space-between;
-    align-items: center;
     position:static;
 }
 
 .form-head h1 {
-    margin: 0.8rem 0 0.8rem 0;
-    margin-left: 10%;
+    margin: 0.8rem 0 0.8rem 10%;
 }
 
 .form-head i {
@@ -175,7 +173,7 @@ body::before {
 }
 
 .form-box h2 {
-    margin-bottom: 0rem;
+    margin-bottom: 0;
 }
 
 .row-between {
@@ -216,6 +214,46 @@ body::before {
     margin-top: 0.5rem;
 }
 
+.form-box#contact-form {
+    margin-top: 3rem;
+    margin-left: 40%;
+}
+
+.form-box form {
+    margin-top: -1rem;
+}
+
+.form-box#contact-form h1 {
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+.form-box#contact-form p {
+    padding-left: 1rem;
+    margin-top: -0.5rem;
+    color: #333333;
+}
+
+.form-box#contact-form textarea {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 5rem;
+    border-color: #d6d6d6;
+    resize: none;
+    font-family: Bahnschrift, serif;
+    box-sizing: border-box;
+    padding: 0.5rem;
+}
+
+#contact-form form .form-group {
+    margin: 1rem;
+}
+
+#contact-form form .btn-custom {
+    margin-top: 0;
+}
+
 .form-control {
     padding: 0.5rem;
     border: 1px solid #ccc;
@@ -223,7 +261,7 @@ body::before {
     max-width: 30rem;
     min-width: 20rem;
     width: 95%;
-    font-family: Bahnschrift;
+    font-family: Bahnschrift, serif;
 }
 
 .search-control {

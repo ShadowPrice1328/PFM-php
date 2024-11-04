@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class="form-box" id="chart">
-        <h1>Generate line chart <i class="fa-solid fa-chart-line"></i></h1>
+        <h1>Generate line chart <i class="fa-solid fa-chart-line" style="margin-left:0.2rem"></i></h1>
 
         <form autocomplete="off" method="post">
             <?php if (!empty($errors['summary'])): ?>
