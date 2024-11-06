@@ -6,14 +6,22 @@
 </head>
 <body>
     <?php
-    $authenticated = true;
+    $authenticated = false;
     $pageTitle = 'Contact';
 
     ob_start(); // Start output buffering
     ?>
 
     <div class="container">
-        <div class="form-box" style="right: 0" id="contact-form">
+        <div style="margin-top: 5rem;">
+            <a href="https://www.vecteezy.com/free-vector/postman">
+                <img src="/images/postman_vecteezy.jpg" alt="Smiling postman"
+                     width="550px"/>
+            </a>
+            <p style="font-size: xx-small">Postman Vectors by Vecteezy</p>
+        </div>
+
+        <div class="form-box" id="contact-form">
             <h1>Contact Us</h1>
             <p>Please fill this form in a decent manner</p>
             <form method="post">
@@ -44,9 +52,14 @@
         </div>
     </div>
 
+    <input type="hidden" value="<?php echo $authenticated ? 'true' : 'false'; ?>" id="authenticated"/>
+    <input type="hidden" value="contact-form" id="formToSlide"/>
+
     <?php
     $content = ob_get_clean(); // Get the buffered content
     include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
     ?>
+
+    <script src="js/form-slide.js"></script>
 </body>
 </html>

@@ -52,7 +52,7 @@ ob_start(); // Start output buffering
             <h3>Manage your personal finances <span class="cool-text">effortlessly</span>.</h3>
         </div>
 
-        <div class="form-box" id="loginForm">
+        <div class="form-box" id="slideForm">
             <h1>Sign In <i class="fa-solid fa-right-to-bracket" style="padding-right: 10px"></i></h1>
 
         <!-- Login form starts here -->
@@ -73,6 +73,7 @@ ob_start(); // Start output buffering
         </div>
 
         <input type="hidden" value="<?php echo $authenticated ? 'true' : 'false'; ?>" id="authenticated"/>
+        <input type="hidden" value="slideForm" id="formToSlide"/>
 
     <?php endif; ?>
 </div>

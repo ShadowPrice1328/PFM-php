@@ -215,8 +215,9 @@ body::before {
 }
 
 .form-box#contact-form {
+    opacity: 100%;
     margin-top: 3rem;
-    margin-left: 40%;
+    margin-left: 10%;
 }
 
 .form-box form {
