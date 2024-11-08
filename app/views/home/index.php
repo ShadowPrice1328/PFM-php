@@ -25,7 +25,7 @@ ob_start(); // Start output buffering
     <div>
         <h1>Welcome back, <?php echo '[name of user]' ?> </h1>
         <div class='dashboard'>
-            <div class='card'>
+            <div class='card' onclick="redirectTo('/categories')">
                 <h2>Categories (<?php echo count($viewModel['categories']); ?>)</h2>
                 <ul>
                     <?php foreach ($viewModel['categories'] as $category): ?>
@@ -35,7 +35,7 @@ ob_start(); // Start output buffering
             </div>
 
             <?php if (isset($viewModel['transactions'])): ?>
-                <div class='card'>
+                <div class='card' onclick="redirectTo('/transactions')">
                     <h2>Transactions</h2>
                     <ul>
                         <?php foreach ($viewModel['transactions'] as $transaction): ?>
@@ -85,3 +85,9 @@ include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
 </html>
 
 <script src="js/form-slide.js"></script>
+
+<script>
+    function redirectTo(url) {
+        window.location.href = url;
+    }
+</script>
