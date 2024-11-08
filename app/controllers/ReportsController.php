@@ -48,15 +48,19 @@ class ReportsController
     public function overview(): void
     {
         $model = $this->handleReportRequest(); // Removed the chart title parameter
+
+        if (!isset($model))
+        {
+            include_once(__DIR__ . '/../views/reports/overview.php');
+            return;
+        }
+
         $chartTitle = $this->generateChartTitle($model); // Generate title based on model
         $category_names = $this->transactionsService->getCategoryNamesOfTransactions();
 
-        if (isset($model))
-        {
-            $categoryCosts = [];
-            foreach ($model->categoryCosts as $category => $decimalObj) {
-                $categoryCosts[$category] = $decimalObj->getValue();  // Access the private value through the getter
-            }
+        $categoryCosts = [];
+        foreach ($model->categoryCosts as $category => $decimalObj) {
+            $categoryCosts[$category] = $decimalObj->getValue();  // Access the private value through the getter
         }
 
         include_once(__DIR__ . '/../views/reports/overview.php');
@@ -65,6 +69,13 @@ class ReportsController
     public function daily(): void
     {
         $model = $this->handleReportRequest(); // Removed the chart title parameter
+
+        if (!isset($model))
+        {
+            include_once(__DIR__ . '/../views/reports/daily.php');
+            return;
+        }
+
         $chartTitle = $this->generateChartTitle($model); // Generate title based on model
         $category_names = $this->transactionsService->getCategoryNamesOfTransactions();
 
@@ -97,17 +108,24 @@ class ReportsController
         include_once __DIR__ . '/../views/reports/daily.php';
     }
 
-    private function handleReportRequest(): GenerateReportResponse
+    private function handleReportRequest(): ?GenerateReportResponse
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return $this->generateResponse(); // Just return the model directly
         } else {
-            $request = new GenerateReportRequest();
-            $request->firstDate = new DateTime($this->transactionsService->getFirstTransaction()->date);
-            $request->lastDate = new DateTime('now');
-            $request->type = "Expense";
+            if (!empty($this->transactionsService->getFirstTransaction()))
+            {
+                $request = new GenerateReportRequest();
+                $request->firstDate = new DateTime($this->transactionsService->getFirstTransaction()->date);
+                $request->lastDate = new DateTime('now');
+                $request->type = "Expense";
 
-            return $this->reportsService->generateReport($request, false);
+                return $this->reportsService->generateReport($request, false);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 

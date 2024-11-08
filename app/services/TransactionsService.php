@@ -41,7 +41,7 @@ class TransactionsService implements ITransactionsService
         return array_unique($stmt->fetchAll(PDO::FETCH_COLUMN));
     }
 
-    public function getFirstTransaction() : TransactionResponse
+    public function getFirstTransaction() : ?TransactionResponse
     {
         $stmt = $this->pdo->prepare('SELECT * FROM transactions ORDER BY Date ASC LIMIT 1');
         $stmt->execute();
@@ -62,6 +62,9 @@ class TransactionsService implements ITransactionsService
             $response->description = $transactionData['Description'];
 
             return $response;
+        } else
+        {
+            return null;
         }
     }
 
