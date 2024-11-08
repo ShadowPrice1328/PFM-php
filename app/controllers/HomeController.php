@@ -2,9 +2,16 @@
 
 namespace controllers;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require(__DIR__ . '/../../vendor/autoload.php');
+
 require_once(__DIR__ . '/../services/DatabaseService.php');
 require_once(__DIR__ . '/../services/CategoriesService.php');
 require_once(__DIR__ . '/../services/TransactionsService.php');
+
 
 class HomeController
 {
@@ -19,7 +26,7 @@ class HomeController
         $this->transactionsService = $transactionsService;
     }
 
-    public function index()
+    public function index(): void
     {
         $viewModel = [];
 
@@ -44,8 +51,47 @@ class HomeController
         include_once(__DIR__ . '/../views/home/index.php');
     }
 
-    public function contact()
+    public function contact(): void
     {
         include_once(__DIR__ . '/../views/home/contact.php');
+    }
+
+    public function sendEmail(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = htmlspecialchars(trim($_POST['name']));
+            $email = htmlspecialchars(trim($_POST['email']));
+            $phone = htmlspecialchars(trim($_POST['phone']));
+            $message = htmlspecialchars(trim($_POST['message']));
+
+            $mail = new PHPMailer();
+
+            $mail->isSMTP();
+            $mail->Host = $_ENV['MAIL_HOST'];
+            $mail->SMTPAuth = true;
+            $mail->Username = $_ENV['MAIL_USERNAME'];
+            $mail->Password = $_ENV['MAIL_PASSWORD'];
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            $mail->setFrom($_ENV['MAIL_SETFROM_ADDRESS'], $_ENV['MAIL_SETFROM_NAME']);
+            $mail->addReplyTo($email, $name);
+
+            $mail->addAddress($_ENV['MAIL_ADDADDRESS']);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Email from PFM user';
+
+            $mail->Body = $message . '<br><br>'. $phone . '<br>' . $email;
+
+            if(!$mail->send())
+            {
+                echo 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
+            }
+            else
+            {
+                echo "<small>Thank you, $name! <br> We have received your message and will get back to you soon.</small>";
+            }
+        }
     }
 }
