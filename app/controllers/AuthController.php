@@ -2,6 +2,8 @@
 
 namespace controllers;
 
+require_once(__DIR__ . '/../services/CategoriesService.php');
+
 use interfaces\IAuthService;
 
 class AuthController
@@ -29,7 +31,7 @@ class AuthController
             if ($this->authService->registerUser($email, $username, $password))
             {
                 $userId = $this->authService->getUserIdByUsername($username);
-                $_SESSION['userId'] = $userId;
+                $_SESSION['user_id'] = $userId;
 
                 header('location: /');
                 exit;

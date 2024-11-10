@@ -21,7 +21,10 @@ use controllers\ReportsController;
 use controllers\TransactionsController;
 use services\CategoriesService;
 use services\ReportsService;
+use services\SessionManager;
 use services\TransactionsService;
+
+SessionManager::start();
 
 // Ініціалізація сервісів
 $databaseService = new DatabaseService();
