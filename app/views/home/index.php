@@ -55,28 +55,29 @@ ob_start(); // Start output buffering
         <div class="form-box" id="slideForm">
             <h1>Sign In <i class="fa-solid fa-right-to-bracket" style="padding-right: 10px"></i></h1>
 
-        <!-- Login form starts here -->
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="text" id="email" name="email" placeholder="Enter your email" class="form-control" required />
-            </div>
-
-            <div class="form-group">
-                <div class="row-between">
-                    <label for="password">Password</label>
-                    <i class="fa-solid fa-eye" id="pass-eye" style="cursor:pointer;padding-right:2px;" onclick="showpassword()"></i>
+            <form method="post" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="text" id="email" name="email" placeholder="Enter your email" class="form-control" required />
                 </div>
-                <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control" required />
-            </div>
 
-            <button onclick="login()" class="btn btn-custom">Login</button>
+                <div class="form-group">
+                    <div class="row-between">
+                        <label for="password">Password</label>
+                        <i class="fa-solid fa-eye" id="pass-eye" style="cursor:pointer;padding-right:2px;" onclick="showpassword()"></i>
+                    </div>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control" required />
+                </div>
+
+                <button type="submit" class="btn btn-custom">Login</button>
+                <div id="error" class="text-bad"></div>
+            </form>
+
+            <input type="hidden" value="<?php echo $authenticated ? 'true' : 'false'; ?>" id="authenticated"/>
+            <input type="hidden" value="slideForm" id="formToSlide"/>
+
+            <?php endif; ?>
         </div>
-
-        <input type="hidden" value="<?php echo $authenticated ? 'true' : 'false'; ?>" id="authenticated"/>
-        <input type="hidden" value="slideForm" id="formToSlide"/>
-
-    <?php endif; ?>
-</div>
 <?php
 $content = ob_get_clean(); // Get the buffered content
 include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
@@ -85,6 +86,7 @@ include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
 </html>
 
 <script src="js/form-slide.js"></script>
+<script src="js/login.js"></script>
 
 <script>
     function redirectTo(url) {

@@ -21,6 +21,26 @@ class AuthController
         include_once(__DIR__ . '/../views/auth/index.php');
     }
 
+    public function login() : void
+    {
+        header('Content-Type: application/json');
+
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        if ($this->authService->authenticate($email, $password))
+        {
+            $userId = $this->authService->getUserIdByEmail($email);
+            SessionManager::setUserId($userId);
+
+            echo json_encode(['success' => true]);
+        }
+        else
+        {
+            echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
+        }
+    }
+
     public function register(): void
     {
         $email = $_POST['email'] ?? null;

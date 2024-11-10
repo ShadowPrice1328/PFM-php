@@ -83,6 +83,9 @@ switch ($request) {
     case $request === '/register':
         $authController->index();
         break;
+    case $request === '/login'  && $_SERVER['REQUEST_METHOD'] === 'POST':
+        $authController->login();
+        break;
     case $request === '/transactions':
         $transactionsController->index();
         break;

@@ -35,6 +35,14 @@ class AuthService implements IAuthService
         return $stmt->fetchColumn();
     }
 
+    public function getUserIdByEmail($email)
+    {
+        $stmt = $this->pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+
+        return $stmt->fetchColumn();
+    }
+
     public function registerUser($email, $username, $password) : bool
     {
         $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM users WHERE email = ?');
