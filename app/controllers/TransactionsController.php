@@ -14,6 +14,7 @@ use dtos\TransactionUpdateRequest;
 use enums\TransactionTypeOptions;
 use interfaces\ICategoriesService;
 use models\Decimal;
+use services\SessionManager;
 use services\TransactionsService;
 use viewmodels\TransactionViewModel;
 
@@ -45,6 +46,11 @@ class TransactionsController
 
     public function index() : void
     {
+        if (!SessionManager::isLoggedIn()) {
+            header('Location: /');
+            exit;
+        }
+
         $model = new TransactionViewModel(
             $this->transactionService->getTransactions(),
             $this->transactionService->getCategoryNamesOfTransactions()

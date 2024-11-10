@@ -11,6 +11,7 @@ use dtos\GenerateReportResponse;
 use interfaces\ICategoriesService;
 use interfaces\IReportsService;
 use interfaces\ITransactionsService;
+use services\SessionManager;
 
 class ReportsController
 {
@@ -47,6 +48,11 @@ class ReportsController
 
     public function overview(): void
     {
+        if (!SessionManager::isLoggedIn()) {
+            header('Location: /');
+            exit;
+        }
+
         $model = $this->handleReportRequest(); // Removed the chart title parameter
 
         if (!isset($model))
@@ -68,6 +74,11 @@ class ReportsController
 
     public function daily(): void
     {
+        if (!SessionManager::isLoggedIn()) {
+            header('Location: /');
+            exit;
+        }
+
         $model = $this->handleReportRequest(); // Removed the chart title parameter
 
         if (!isset($model))

@@ -12,6 +12,11 @@ class SessionManager
         }
     }
 
+    public static function setUserId($user_id): void
+    {
+        $_SESSION['user_id'] = $user_id;
+    }
+
     public static function getUserId(): ?int
     {
         return $_SESSION['user_id'] ?? null;

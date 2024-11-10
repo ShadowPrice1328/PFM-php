@@ -8,6 +8,7 @@ require_once __DIR__ . "/../dtos/CategoryAddRequest.php";
 use dtos\CategoryAddRequest;
 use dtos\CategoryUpdateRequest;
 use interfaces\ICategoriesService;
+use services\SessionManager;
 
 class CategoriesController
 {
@@ -33,6 +34,11 @@ class CategoriesController
 
     public function index(): void
     {
+        if (!SessionManager::isLoggedIn()) {
+            header('Location: /');
+            exit;
+        }
+
         $categories = $this->categoriesService->getCategories();
 
         include_once(__DIR__ . '/../views/categories/index.php');
