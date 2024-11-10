@@ -34,4 +34,25 @@ class AuthService implements IAuthService
 
         return $stmt->fetchColumn();
     }
+
+    public function registerUser($email, $username, $password) : bool
+    {
+        $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM users WHERE email = ?');
+        $stmt->execute([$email]);
+
+        if ($stmt->fetchColumn() > 0) {
+            return false;
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $this->pdo->prepare(
+            'INSERT INTO users (username, email, passwordhash) VALUES (:username, :email, :passwordhash)'
+        );
+        return $stmt->execute([
+            ':username' => $username,
+            ':email' => $email,
+            ':passwordhash' => $hashedPassword
+        ]);
+    }
 }

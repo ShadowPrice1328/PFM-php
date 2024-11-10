@@ -4,7 +4,7 @@ $(document).ready(function() {
         console.log("Clicked!");
 
         $.ajax({
-            url: 'contact/submit', // Ваша action URL контролера
+            url: 'contact/submit',
             type: 'POST',
             data: $(this).serialize(),
             success: function(data) {

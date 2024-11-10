@@ -18,6 +18,8 @@ require_once __DIR__ . '/../interfaces/ICategoriesService.php';
 
 class CategoriesService implements ICategoriesService
 {
+    // TO DO: USE SESSION MANAGER HERE TO OBTAIN USER'S ID
+
     private $pdo;
 
     public function __construct($pdo)
