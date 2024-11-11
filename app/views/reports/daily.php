@@ -1,7 +1,5 @@
 <?php
     $pageTitle = "Daily Report";
-    $authenticated = false;
-
     ob_start();
     ?>
 

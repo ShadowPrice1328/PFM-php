@@ -1,6 +1,5 @@
 <?php
     $pageTitle = "Edit " . $category->name . " category";
-    $authenticated = false;
     ob_start();
     ?>
     <div class="container">

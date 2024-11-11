@@ -1,5 +1,4 @@
 <?php
-$authenticated = false;
 $pageTitle = "Categories";
 ob_start(); // Start output buffering
 ?>

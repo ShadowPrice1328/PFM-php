@@ -6,7 +6,7 @@
 </head>
 <body>
     <?php
-    $authenticated = false;
+    $authenticated = \services\SessionManager::isLoggedIn();
     $pageTitle = 'Contact';
 
     ob_start(); // Start output buffering

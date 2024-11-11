@@ -1,6 +1,5 @@
 <?php
     $pageTitle = 'Overview';
-    $authenticated = false;
     ob_start();
 
 ?>

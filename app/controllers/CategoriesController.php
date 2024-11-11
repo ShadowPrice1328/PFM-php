@@ -12,10 +12,14 @@ use services\SessionManager;
 
 class CategoriesController
 {
+    private bool $authenticated;
     private $databaseService;
     private ICategoriesService $categoriesService;
+
     public function __construct($databaseService, $categoriesService)
     {
+        $this->authenticated = \services\SessionManager::isLoggedIn();
+
         $this->databaseService = $databaseService;
         $this->categoriesService = $categoriesService;
         $this->checkDatabaseConnection();

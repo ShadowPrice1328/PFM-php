@@ -5,31 +5,37 @@ namespace controllers;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use services\SessionManager;
 
 require(__DIR__ . '/../../vendor/autoload.php');
 
 require_once(__DIR__ . '/../services/DatabaseService.php');
 require_once(__DIR__ . '/../services/CategoriesService.php');
 require_once(__DIR__ . '/../services/TransactionsService.php');
+require_once(__DIR__ . '/../services/AuthService.php');
 
 
 class HomeController
 {
+    public bool $authenticated;
     private $databaseService;
     private $categoriesService;
     private $transactionsService;
+    private $authService;
 
-    public function __construct($databaseService, $categoriesService, $transactionsService)
+    public function __construct($databaseService, $categoriesService, $transactionsService, $authService)
     {
         $this->databaseService = $databaseService;
         $this->categoriesService = $categoriesService;
         $this->transactionsService = $transactionsService;
+        $this->authService = $authService;
     }
 
     public function index(): void
     {
-        $viewModel = [];
+        $username = $this->authService->getUsernameByUserId(SessionManager::getUserId());
 
+        $viewModel = [];
         // Check database connection
         list($isConnected, $errorMessage) = $this->databaseService->canConnect();
 
@@ -47,6 +53,7 @@ class HomeController
             mkdir($logDir, 0775, true);
         }
         file_put_contents($logDir . '/debug.log', print_r($viewModel, true), FILE_APPEND);
+
         // Pass data to the view
         include_once(__DIR__ . '/../views/home/index.php');
     }

@@ -1,6 +1,5 @@
 <?php
     $pageTitle = 'Create new category';
-    $authenticated = false;
 ?>
 
 <div class="container">

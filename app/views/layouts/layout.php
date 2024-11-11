@@ -1,3 +1,7 @@
+<?php
+    $authenticated = \services\SessionManager::isLoggedIn();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

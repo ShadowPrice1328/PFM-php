@@ -1,6 +1,6 @@
 <?php
     $pageTitle = "Create a new account";
-    $authenticated = false;
+    $authenticated = \services\SessionManager::isLoggedIn();
 
     var_dump($email ?? '');
     var_dump($username ?? '');

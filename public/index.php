@@ -36,7 +36,7 @@ $transactionsService = new TransactionsService($databaseService->getPdo());
 $reportsService = new ReportsService($transactionsService);
 $authService = new AuthService($databaseService->getPdo());
 
-$homeController = new HomeController($databaseService, $categoriesService, $transactionsService);
+$homeController = new HomeController($databaseService, $categoriesService, $transactionsService, $authService);
 $categoriesController = new CategoriesController($databaseService, $categoriesService);
 $transactionsController = new TransactionsController($databaseService, $transactionsService, $categoriesService);
 $reportsController = new ReportsController($databaseService, $categoriesService, $transactionsService, $reportsService);

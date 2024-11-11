@@ -1,6 +1,5 @@
 <?php
     $pageTitle = "Details about " . $category->name . " category";
-    $authenticated = false;
     ob_start();
 ?>
 

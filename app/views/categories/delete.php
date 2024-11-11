@@ -1,6 +1,5 @@
 <?php
     $pageTitle = "Delete " . $category->name . " category";
-    $authenticated = false;
     ob_start();
 ?>
 
