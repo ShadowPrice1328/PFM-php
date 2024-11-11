@@ -27,18 +27,28 @@ ob_start(); // Start output buffering
                 <h2>Categories (<?php echo count($viewModel['categories']); ?>)</h2>
                 <ul>
                     <?php foreach ($viewModel['categories'] as $category): ?>
-                        <li><?php echo htmlspecialchars($category['Name']); ?></li>
+                        <li><p><?php echo htmlspecialchars($category->name); ?></p></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
 
             <?php if (isset($viewModel['transactions'])): ?>
                 <div class='card' onclick="redirectTo('/transactions')">
-                    <h2>Transactions</h2>
+                    <h2>Recent Transactions</h2>
                     <ul>
-                        <?php foreach ($viewModel['transactions'] as $transaction): ?>
-                            <li><?php echo htmlspecialchars($transaction['Description']) . ' - ' . htmlspecialchars($transaction['Cost']); ?></li>
+                        <?php foreach (array_slice($viewModel['transactions'], 0, 5) as $transaction): ?>
+                            <li>
+                                <p>
+                                    <?= htmlspecialchars($transaction['Category']) . ' - ' . htmlspecialchars($transaction['Cost']) . ' - '; ?>
+                                    <?=
+                                        htmlspecialchars(strlen($transaction['Description']) > 15
+                                        ? substr($transaction['Description'], 0, 15)
+                                        : $transaction['Description']);
+                                    ?>
+                                </p>
+                            </li>
                         <?php endforeach; ?>
+                        <li>. . .</li>
                     </ul>
                 </div>
             <?php endif; ?>

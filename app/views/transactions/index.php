@@ -1,9 +1,6 @@
 <?php
 $pageTitle = "Transactions";
-$authenticated = false;
-
 ob_start();
-
 ?>
 
 <h2>Transaction list:</h2>

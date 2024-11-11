@@ -1,13 +1,7 @@
 <?php
     $pageTitle = "Create a new account";
     $authenticated = \services\SessionManager::isLoggedIn();
-
-    var_dump($email ?? '');
-    var_dump($username ?? '');
-    var_dump($password ?? '');
-
-
-ob_start();
+    ob_start();
 ?>
 
 <div class="container text-center">

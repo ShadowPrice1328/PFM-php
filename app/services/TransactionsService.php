@@ -23,28 +23,43 @@ require_once __DIR__ . '/../interfaces/ITransactionsService.php';
 class TransactionsService implements ITransactionsService
 {
     private PDO $pdo;
+    private ?int $userId;
 
     public function __construct($pdo)
     {
+        $this->userId = SessionManager::getUserId();
+
+        $this->userId = SessionManager::getUserId();
         $this->pdo = $pdo;
     }
 
     public function getTransactions(): array
     {
-        $stmt = $this->pdo->query('SELECT * FROM transactions');
+        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE userId = ?');
+        $stmt->execute([$this->userId]);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getCategoryNamesOfTransactions() : array
     {
-        $stmt = $this->pdo->query('SELECT Category FROM transactions');
-        return array_unique($stmt->fetchAll(PDO::FETCH_COLUMN));
+        $stmt = $this->pdo->prepare('SELECT Category FROM transactions WHERE userId = ?');
+        $stmt->execute([$this->userId]);
+        $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+        if (empty($data)) {
+            $stmt = $this->pdo->prepare('SELECT DISTINCT Name FROM categories WHERE userId = ?');
+            $stmt->execute([$this->userId]);
+            $data = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+
+        return array_unique($data);
     }
 
     public function getFirstTransaction() : ?TransactionResponse
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM transactions ORDER BY Date ASC LIMIT 1');
-        $stmt->execute();
+        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE userId = ? ORDER BY Date ASC LIMIT 1');
+        $stmt->execute([$this->userId]);
 
         // Fetch the result as an associative array
         $transactionData = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -70,8 +85,8 @@ class TransactionsService implements ITransactionsService
 
     public function getFilteredTransactions(string $filterBy, ?string $filterString): array {
         // Sample SQL query based on the filter
-        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE ' . $filterBy . ' LIKE ?');
-        $stmt->execute(["%$filterString%"]);
+        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE ' . $filterBy . ' LIKE ? AND userId = ?');
+        $stmt->execute(["%$filterString%", $this->userId]);
         $transactionsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Transform the associative array into Transaction objects
@@ -89,8 +104,8 @@ class TransactionsService implements ITransactionsService
             throw new InvalidArgumentException("Category ID cannot be null.");
         }
 
-        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE id = ?');
-        $stmt->execute([$transactionId]);
+        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE id = ? AND userId = ?');
+        $stmt->execute([$transactionId, $this->userId]);
         $transactionData = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($transactionData) {
@@ -117,16 +132,20 @@ class TransactionsService implements ITransactionsService
 
         $transaction = $request->toTransaction();
 
-        $stmt = $this->pdo->prepare('INSERT INTO transactions (Id, Category, Type, Description, Cost, Date) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute([$transaction->id, $transaction->category, $transaction->type, $transaction->description, $transaction->cost, $transaction->date]);
+        $stmt = $this->pdo->prepare('SELECT Id FROM categories WHERE Name = ?');
+        $stmt->execute([$transaction->category]);
+        $categoryId = $stmt->fetchColumn();
+
+        $stmt = $this->pdo->prepare('INSERT INTO transactions (Id, Category, Type, Description, Cost, Date, UserId, CategoryId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$transaction->id, $transaction->category, $transaction->type, $transaction->description, $transaction->cost, $transaction->date, $this->userId, $categoryId]);
 
         return TransactionExtensions::toTransactionResponse($transaction);
     }
 
     public function updateTransaction(?TransactionUpdateRequest $request): TransactionResponse
     {
-        $stmt = $this->pdo->prepare('UPDATE transactions SET category = ?, type = ?, cost = ?, date = ?, description = ? WHERE id = ?');
-        $stmt->execute([$request->category, $request->type->name, $request->cost, $request->date, $request->description, $request->id]);
+        $stmt = $this->pdo->prepare('UPDATE transactions SET category = ?, type = ?, cost = ?, date = ?, description = ?, categoryId = (SELECT Id FROM categories WHERE Name = ?) WHERE id = ?');
+        $stmt->execute([$request->category, $request->type->name, $request->cost, $request->date, $request->description, $request->category, $request->id]);
 
         return $this->getTransactionByTransactionId($request->id);
     }
@@ -138,8 +157,9 @@ class TransactionsService implements ITransactionsService
         }
 
         // Delete transaction from the database
-        $stmt = $this->pdo->prepare('DELETE FROM transactions WHERE id = ?');
-        return $stmt->execute([$guid]);    }
+        $stmt = $this->pdo->prepare('DELETE FROM transactions WHERE id = ? AND UserId = ?');
+        return $stmt->execute([$guid, $this->userId]);
+    }
 
     public function getTransactionBetweenTwoDates(?\DateTime $startDate, ?\DateTime $endDate): array
     {
@@ -147,8 +167,8 @@ class TransactionsService implements ITransactionsService
             throw new InvalidArgumentException("Start date and end date cannot be null.");
         }
 
-        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE date BETWEEN ? AND ?');
-        $stmt->execute([$startDate->format('Y-m-d'), $endDate->format('Y-m-d')]);
+        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE UserId = ? AND date BETWEEN ? AND ?');
+        $stmt->execute([$this->userId, $startDate->format('Y-m-d'), $endDate->format('Y-m-d')]);
 
         $transactionsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $transactions = $this->transformTheAssociativeArrayIntoTransactionObjects($transactionsData);
