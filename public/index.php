@@ -12,6 +12,8 @@ require_once(__DIR__ . '/../app/services/DatabaseService.php');
 require_once(__DIR__ . '/../app/services/CategoriesService.php');
 require_once(__DIR__ . '/../app/services/TransactionsService.php');
 require_once(__DIR__ . '/../app/services/ReportsService.php');
+require_once(__DIR__ . '/../app/services/SessionManager.php');
+require_once(__DIR__ . '/../app/services/AuthService.php');
 
 
 use controllers\AuthController;
@@ -19,6 +21,7 @@ use controllers\CategoriesController;
 use controllers\HomeController;
 use controllers\ReportsController;
 use controllers\TransactionsController;
+use services\AuthService;
 use services\CategoriesService;
 use services\ReportsService;
 use services\SessionManager;
@@ -31,12 +34,13 @@ $databaseService = new DatabaseService();
 $categoriesService = new CategoriesService($databaseService->getPdo());
 $transactionsService = new TransactionsService($databaseService->getPdo());
 $reportsService = new ReportsService($transactionsService);
+$authService = new AuthService($databaseService->getPdo());
 
 $homeController = new HomeController($databaseService, $categoriesService, $transactionsService);
 $categoriesController = new CategoriesController($databaseService, $categoriesService);
 $transactionsController = new TransactionsController($databaseService, $transactionsService, $categoriesService);
 $reportsController = new ReportsController($databaseService, $categoriesService, $transactionsService, $reportsService);
-$authController = new AuthController();
+$authController = new AuthController($authService);
 
 // Отримуємо шлях запиту без параметрів
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -80,11 +84,17 @@ switch ($request) {
     case $request === '/categories/create':
         $categoriesController->create();
         break;
+    case $request === '/register' && $_SERVER['REQUEST_METHOD'] === 'POST':
+        $authController->register();
+        break;
     case $request === '/register':
         $authController->index();
         break;
     case $request === '/login'  && $_SERVER['REQUEST_METHOD'] === 'POST':
         $authController->login();
+        break;
+    case $request === '/logout' && $_SERVER['REQUEST_METHOD'] === 'POST':
+        $authController->logout();
         break;
     case $request === '/transactions':
         $transactionsController->index();

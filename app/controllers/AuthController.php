@@ -41,6 +41,16 @@ class AuthController
         }
     }
 
+    public function logout() : void
+    {
+        unset($_SESSION['user_id']);
+        session_destroy();
+
+        // Send a JSON response for AJAX
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true]);
+    }
+
     public function register(): void
     {
         $email = $_POST['email'] ?? null;
@@ -60,6 +70,7 @@ class AuthController
         }
         else
         {
+            header('Location: /contact');
             echo "Please fill in all fields.";
         }
     }

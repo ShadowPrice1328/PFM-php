@@ -15,10 +15,10 @@
 <header>
     <ul>
         <li><a href='/'>Home</a></li>
-        <li><a href="/categories" class="<?php echo !$authenticated ? '' : 'text-muted'; ?>">Categories</a></li>
-        <li><a href="/transactions" class="<?php echo !$authenticated ? '' : 'text-muted'; ?>">Transactions</a></li>
-        <li><a href="/overview" class="<?php echo !$authenticated ? '' : 'text-muted'; ?>">Overview</a></li>
-        <li><a href="/daily" class="<?php echo !$authenticated ? '' : 'text-muted'; ?>">Daily Report</a></li>
+        <li><a href="/categories" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Categories</a></li>
+        <li><a href="/transactions" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Transactions</a></li>
+        <li><a href="/overview" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Overview</a></li>
+        <li><a href="/daily" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Daily Report</a></li>
         <li><a href="/contact">Contact</a></li>
         <li style="float: right;">
             <?php if (!$authenticated): ?>
@@ -41,3 +41,18 @@
 </footer>
 </body>
 </html>
+
+<script>
+    function logout() {
+        $.ajax({
+            url: '/logout',
+            type: 'POST',
+            success: function(response) {
+                window.location.href = '/';
+            },
+            error: function(error) {
+                console.error('Error logging out:', error);
+            }
+        });
+    }
+</script>

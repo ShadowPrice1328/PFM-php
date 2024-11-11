@@ -2,7 +2,12 @@
     $pageTitle = "Create a new account";
     $authenticated = false;
 
-    ob_start();
+    var_dump($email ?? '');
+    var_dump($username ?? '');
+    var_dump($password ?? '');
+
+
+ob_start();
 ?>
 
 <div class="container text-center">
@@ -14,7 +19,7 @@
         <p style="font-size: xx-small">Registration Vectors by Vecteezy</p>
     </div>
 
-    <div class="form-box" style="right: 0; margin-left:3rem" id="registrationForm">
+    <form method="post" action="/register" class="form-box" style="right: 0; margin-left:3rem" id="registrationForm">
         <h2>Create an PFM account</h2>
         <p class="sub-heading">Create a free account or
             <a href="/">log in</a>.
@@ -35,8 +40,8 @@
             </div>
             <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control" required />
         </div>
-        <button onclick="register()" class="btn btn-custom">Sign Up</button> <!--implement-->
-    </div>
+        <button type="submit" class="btn btn-custom">Sign Up</button>
+    </form>
 </div>
 
 <script src="/js/password.js"></script>

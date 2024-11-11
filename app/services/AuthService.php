@@ -2,6 +2,8 @@
 
 namespace services;
 
+require_once(__DIR__ . '/../interfaces/IAuthService.php');
+
 use interfaces\IAuthService;
 use PDO;
 
@@ -13,10 +15,10 @@ class AuthService implements IAuthService
     {
         $this->pdo = $pdo;
     }
-    public function authenticate($username, $password): bool
+    public function authenticate($email, $password): bool
     {
-        $stmt = $this->pdo->prepare("SELECT PasswordHash FROM users WHERE username = ?");
-        $stmt->execute([$username]);
+        $stmt = $this->pdo->prepare("SELECT PasswordHash FROM users WHERE email = ?");
+        $stmt->execute([$email]);
 
         $hashedPassword = $stmt->fetchColumn();
 

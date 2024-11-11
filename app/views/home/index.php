@@ -11,9 +11,7 @@
 <body>
 <?php
 require_once (__DIR__. '/../../../config/config.php');
-
-$authenticated = false;
-
+$authenticated = \services\SessionManager::isLoggedIn();
 ob_start(); // Start output buffering
 ?>
 <div class='container text-center'>
