@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/password.js"></script>
-    <script src="js/login.js"></script>
-</head>
-<body>
 <?php
 require_once (__DIR__. '/../../../config/config.php');
 $authenticated = \services\SessionManager::isLoggedIn();
+$pageTitle = "Home Page";
+
 ob_start(); // Start output buffering
 ?>
 <div class='container text-center'>
@@ -90,11 +81,6 @@ ob_start(); // Start output buffering
 $content = ob_get_clean(); // Get the buffered content
 include (__DIR__ . '/../../views/layouts/layout.php'); // Include the layout
 ?>
-</body>
-</html>
-
-<script src="js/form-slide.js"></script>
-<script src="js/login.js"></script>
 
 <script>
     function redirectTo(url) {

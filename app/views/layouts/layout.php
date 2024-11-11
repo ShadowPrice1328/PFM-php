@@ -13,6 +13,8 @@
     <script src="/js/jquery-3.7.1.min.js"></script>
     <script src="/js/setactive.js"></script>
     <script src="/assets/fontawesome-free-6.6.0-web/js/all.js"> </script>
+    <script src="js/password.js"></script>
+    <script src="js/login.js"></script>
 
 </head>
 <body>
@@ -60,3 +62,5 @@
         });
     }
 </script>
+
+<script src="js/form-slide.js"></script>
