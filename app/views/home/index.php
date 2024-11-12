@@ -17,9 +17,10 @@ ob_start(); // Start output buffering
             <div class='card' onclick="redirectTo('/categories')">
                 <h2>Categories (<?php echo count($viewModel['categories']); ?>)</h2>
                 <ul>
-                    <?php foreach ($viewModel['categories'] as $category): ?>
+                    <?php foreach (array_slice($viewModel['categories'], 0, 5) as $category): ?>
                         <li><p><?php echo htmlspecialchars($category->name); ?></p></li>
                     <?php endforeach; ?>
+                    <li>. . .</li>
                 </ul>
             </div>
 

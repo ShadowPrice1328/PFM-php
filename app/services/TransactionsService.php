@@ -85,8 +85,8 @@ class TransactionsService implements ITransactionsService
 
     public function getFilteredTransactions(string $filterBy, ?string $filterString): array {
         // Sample SQL query based on the filter
-        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE ' . $filterBy . ' LIKE ? AND userId = ?');
-        $stmt->execute(["%$filterString%", $this->userId]);
+        $stmt = $this->pdo->prepare('SELECT * FROM transactions WHERE ' . $filterBy . ' = ? AND userId = ?');
+        $stmt->execute([$filterString, $this->userId]);
         $transactionsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Transform the associative array into Transaction objects

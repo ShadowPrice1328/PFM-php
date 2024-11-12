@@ -117,7 +117,7 @@ class CategoriesService implements ICategoriesService
 
         if (!empty($filterBy) && !empty($filterString)) {
             $query .= ' AND ' . $filterBy . ' LIKE ?';
-            $params[] = '%' . $filterString . '%';
+            $params[] = $filterString . '%';
         }
 
         $stmt = $this->pdo->prepare($query);
