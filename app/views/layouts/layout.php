@@ -15,7 +15,6 @@
     <script src="/assets/fontawesome-free-6.6.0-web/js/all.js"> </script>
     <script src="js/password.js"></script>
     <script src="js/login.js"></script>
-
 </head>
 <body>
 <header>

@@ -53,7 +53,7 @@ class ReportsController
             exit;
         }
 
-        $model = $this->handleReportRequest(); // Removed the chart title parameter
+        $model = $this->handleReportRequest();
 
         if (!isset($model))
         {

@@ -8,7 +8,7 @@
     <div>
         <a href="https://www.vecteezy.com/free-vector/registration">
             <img src="/images/signup_vecteezy.jpg" alt="Vecteezy.com Isometric flat 3d illustration concept of man filling registration form on screen Free Vector"
-                 width="450px" />
+                 width="500px" />
         </a>
         <p style="font-size: xx-small">Registration Vectors by Vecteezy</p>
     </div>
