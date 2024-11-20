@@ -18,7 +18,12 @@
 </head>
 <body>
 <header>
-    <ul>
+    <div class="burger-menu" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <ul class="menu">
         <li><a href='/'>Home</a></li>
         <li><a href="/categories" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Categories</a></li>
         <li><a href="/transactions" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Transactions</a></li>
@@ -33,7 +38,11 @@
             <?php endif; ?>
         </li>
     </ul>
+    <div class="mobile-icon">
+        <i class="fa-solid fa-coins"></i>
+    </div>
 </header>
+
 
 <main>
     <?php echo isset($content) ? $content : ''; ?>
@@ -62,4 +71,5 @@
     }
 </script>
 
+<script src="js/toggleMenu.js"></script>
 <script src="js/form-slide.js"></script>

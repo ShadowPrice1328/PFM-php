@@ -1,3 +1,80 @@
+/* Загальні стилі меню */
+header {
+    position: relative;
+}
+
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Бургер-меню (приховане на великих екранах) */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    margin: 1rem;
+}
+
+.burger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: black;
+    border-radius: 3px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Стиль для іконки */
+.mobile-icon {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+/* Медійний запит для мобільних пристроїв */
+@media (max-width: 768px) {
+    .burger-menu {
+        display: flex;
+    }
+
+    .mobile-icon {
+        display: block;
+        transform: scale(1.5);
+    }
+
+    .menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: white;
+        width: 100%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .menu.active-menu {
+        display: flex;
+    }
+
+    .menu li {
+        margin: 0.5rem 0;
+    }
+}
+
 body {
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -49,7 +126,7 @@ body::before {
     border-bottom: 2px solid #7f7f7f;
     background-color: midnightblue;
     color: white;
-    font-family: Bahnschrift;
+    font-family: Bahnschrift, serif;
 }
 
 .btn-primary:hover {
