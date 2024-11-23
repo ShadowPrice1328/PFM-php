@@ -108,6 +108,17 @@ header {
         margin: 0.5rem 0;
     }
 
+    .container div h1#welcome-back-h1 {
+        margin-top: 10rem;
+    }
+
+    .dashboard {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
     main {
         overflow-y: auto;
     }

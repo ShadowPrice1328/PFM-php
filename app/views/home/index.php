@@ -12,7 +12,7 @@ ob_start(); // Start output buffering
 
     <?php if ($authenticated): ?>
     <div>
-        <h1>Welcome back, <?php echo $username ?> </h1>
+        <h1 id="welcome-back-h1">Welcome back, <?php echo $username ?> </h1>
         <div class='dashboard'>
             <div class='card' onclick="redirectTo('/categories')">
                 <h2>Categories (<?php echo count($viewModel['categories']); ?>)</h2>
