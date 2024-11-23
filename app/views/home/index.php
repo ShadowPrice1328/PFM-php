@@ -47,7 +47,7 @@ ob_start(); // Start output buffering
         </div>
     </div>
     <?php else: ?>
-        <div style="padding-right: 10rem;">
+        <div style="padding-right: 10rem;" id="welcome-text">
             <h1>Welcome to PFM</h1>
             <h3>Manage your personal finances <span class="cool-text">effortlessly</span>.</h3>
         </div>

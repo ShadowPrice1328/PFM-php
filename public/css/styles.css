@@ -49,9 +49,43 @@ header {
         display: flex;
     }
 
+    .form-box#slideForm {
+        width: 100%; /* Щоб форма займала всю ширину */
+        right: 0 !important;
+        font-size: 14px;
+        margin-top: 2rem;
+        overflow-y: auto;
+        padding: 0.5rem 0.5rem 1.5rem 0.5rem !important;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column; /* Вертикальне розташування елементів */
+        align-items: center;
+        text-align: center;
+    }
+
+    .container > div {
+        width: 90%; /* Зробити ширину головного тексту адаптивною */
+    }
+
+    .container > div#welcome-text {
+        padding: 0 !important;
+    }
+
+    .text-muted {
+        color: lightslategray !important;
+        pointer-events: none;
+    }
+
     .mobile-icon {
         display: block;
         transform: scale(1.5);
+    }
+
+    .form-box {
+        max-width: 100%;
+        min-width: 100%;
     }
 
     .menu {
@@ -72,6 +106,10 @@ header {
 
     .menu li {
         margin: 0.5rem 0;
+    }
+
+    main {
+        overflow-y: auto;
     }
 }
 
