@@ -5,7 +5,7 @@
     ob_start();
 ?>
 
-<div class="container">
+<div class="container" id="edit-container">
     <div class="crud-form" id="transactions">
         <div class="form-head">
             <h1>Edit</h1>

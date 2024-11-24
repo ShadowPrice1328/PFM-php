@@ -2,7 +2,7 @@
     $pageTitle = 'Create new category';
 ?>
 
-<div class="container">
+<div class="container" id="create-container">
     <div class="crud-form">
         <div class="form-head">
             <h1>Create</h1>

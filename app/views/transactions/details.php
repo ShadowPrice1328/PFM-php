@@ -5,7 +5,7 @@
     ob_start();
 ?>
 
-<div class="container" style="margin-top: 2rem;">
+<div class="container" id="details-container" style="margin-top: 2rem;">
     <div class="crud-form">
         <div class="form-head">
             <h1>Details</h1>

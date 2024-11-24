@@ -63,10 +63,30 @@ header {
     }
 
     .container#home-container {
+        min-height: 40rem !important;
+    }
+
+    #details-container, #edit-container, #delete-container, #create-container{
+        min-height: 30rem !important;
+        overflow-y: auto;
+    }
+
+    #create-container .crud-form#transactions {
+        margin-top: 8rem !important;
+        min-height: 35rem !important;
+
+    }
+
+    .crud-form#transactions {
+        margin-top: 10rem;
+    }
+
+    #edit-container #transactions {
+        margin-top: 30% !important;
         min-height: 35rem !important;
     }
 
-    .container#registration-container {
+    #registration-container {
         min-height: 50rem !important;
     }
 
@@ -109,6 +129,10 @@ header {
     .container > div#welcome-text {
         padding: 0 !important;
         margin-top: -10% !important;
+    }
+
+    #welcome-back-h1 {
+        margin-top: 10rem;
     }
 
     .text-muted {
@@ -673,7 +697,7 @@ main {
 
 .details-section {
     padding-bottom: 1rem;
-    font-family: Bahnschrift;
+    font-family: Bahnschrift, serif;
 }
 
 dl {

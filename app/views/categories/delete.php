@@ -3,7 +3,7 @@
     ob_start();
 ?>
 
-<div class="container">
+<div class="container" id="delete-container">
     <div class="crud-form">
         <div class="form-head">
             <h1>Delete</h1>

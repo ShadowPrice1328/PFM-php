@@ -3,8 +3,8 @@
     $authenticated = false;
 ?>
 
-<div class="container">
-    <div class="crud-form" style="margin-top: 3rem;">
+<div class="container" id="delete-container">
+    <div class="crud-form" style="margin-top: 3rem;" id="transactions">
         <div class="form-head">
             <h1>Delete</h1>
             <i class="fa-solid fa-trash"></i>

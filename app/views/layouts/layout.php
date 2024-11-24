@@ -15,6 +15,8 @@
     <script src="/assets/fontawesome-free-6.6.0-web/js/all.js"> </script>
     <script src="js/password.js"></script>
     <script src="js/login.js"></script>
+    <script src="/js/toggleMenu.js"></script>
+
 </head>
 <body>
 <header>
@@ -30,6 +32,7 @@
         <li><a href="/overview" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Overview</a></li>
         <li><a href="/daily" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Daily Report</a></li>
         <li><a href="/contact">Contact</a></li>
+
         <li style="float: right;">
             <?php if (!$authenticated): ?>
                 <a href="/register"><i class="fa-solid fa-user-plus" style="padding-right: 12px"></i>Create a new account</a>
@@ -71,5 +74,4 @@
     }
 </script>
 
-<script src="js/toggleMenu.js"></script>
 <script src="js/form-slide.js"></script>
