@@ -5,7 +5,7 @@ $pageTitle = "Home Page";
 
 ob_start(); // Start output buffering
 ?>
-<div class='container text-center'>
+<div class='container text-center' id="home-container">
     <?php if (isset($viewModel['errorMessage'])): ?>
         <p class='status-message'>Connection status: <?php echo htmlspecialchars($viewModel['connectionStatus']); ?></p>
     <?php endif; ?>

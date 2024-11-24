@@ -12,7 +12,7 @@
     ob_start(); // Start output buffering
     ?>
 
-    <div class="container">
+    <div class="container" id="contact-container">
         <div style="margin-top: 5rem;">
             <a href="https://www.vecteezy.com/free-vector/postman">
                 <img src="/images/postman_vecteezy.jpg" alt="Smiling postman"
