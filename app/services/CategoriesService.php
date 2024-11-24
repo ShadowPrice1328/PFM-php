@@ -105,6 +105,10 @@ class CategoriesService implements ICategoriesService
             throw new InvalidArgumentException("GUID cannot be null.");
         }
 
+        // Delete related transactions
+        $stmt = $this->pdo->prepare('DELETE FROM transactions WHERE CategoryId = ? AND userid = ?');
+        $stmt->execute([$guid, $this->userId]);
+
         // Delete the category from the database
         $stmt = $this->pdo->prepare('DELETE FROM categories WHERE id = ? AND userid = ?');
         return $stmt->execute([$guid, $this->userId]);
