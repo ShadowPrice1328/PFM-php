@@ -18,9 +18,9 @@
                 <?= htmlspecialchars($transaction->description) ?>
             </td>
             <td>
-                <a href="/transactions/edit?id=<?= urlencode($transaction->id) ?>"><i class="fa-solid fa-pen"></i></a> |
-                <a href="/transactions/details?id=<?= urlencode($transaction->id) ?>"><i class="fa-solid fa-circle-info"></i></a> |
-                <a href="/transactions/delete?id=<?= urlencode($transaction->id) ?>"><i class="fa-solid fa-trash"></i></a>
+                <a href="/transactions/edit?id=<?= urlencode($transaction->id) ?>"><i class="fa-solid fa-pen"></i></a> <span class="separator">|</span>
+                <a href="/transactions/details?id=<?= urlencode($transaction->id) ?>"><i class="fa-solid fa-circle-info"></i></a> <span class="separator">|</span>
+                <a href="/transactions/delete?id=<?= urlencode($transaction->id) ?>"><i class="fa-solid fa-trash" id="trash-action"></i></a> <span class="separator">|</span>
             </td>
         </tr>
     <?php endforeach; ?>

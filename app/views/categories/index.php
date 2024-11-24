@@ -44,12 +44,12 @@ ob_start(); // Start output buffering
                 <td>
                     <a href="/categories/edit?id=<?php echo urlencode($item->id); ?>">
                         <i class="fa-solid fa-pen"></i>
-                    </a> |
+                    </a> <span class="separator">|</span>
                     <a href="/categories/details?id=<?php echo urlencode($item->id); ?>">
                         <i class="fa-solid fa-circle-info"></i>
-                    </a> |
+                    </a> <span class="separator">|</span>
                     <a href="/categories/delete?id=<?php echo urlencode($item->id); ?>">
-                        <i class="fa-solid fa-trash"></i>
+                        <i class="fa-solid fa-trash" id="trash-action-categories"></i>
                     </a>
                 </td>
             </tr>

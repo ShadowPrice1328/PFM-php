@@ -71,10 +71,10 @@ ob_start();
             <td>
                 <?= htmlspecialchars($transaction['Description']) ?>
             </td>
-            <td>
-                <a href="/transactions/edit?id=<?= urlencode($transaction['Id']) ?>"><i class="fa-solid fa-pen"></i></a> |
-                <a href="/transactions/details?id=<?= urlencode($transaction['Id']) ?>"><i class="fa-solid fa-circle-info"></i></a> |
-                <a href="/transactions/delete?id=<?= urlencode($transaction['Id']) ?>"><i class="fa-solid fa-trash"></i></a>
+            <td id="actions">
+                <a href="/transactions/edit?id=<?= urlencode($transaction['Id']) ?>"><i class="fa-solid fa-pen"></i></a> <span class="separator">|</span>
+                <a href="/transactions/details?id=<?= urlencode($transaction['Id']) ?>"><i class="fa-solid fa-circle-info"></i></a> <span class="separator">|</span>
+                <a href="/transactions/delete?id=<?= urlencode($transaction['Id']) ?>"><i class="fa-solid fa-trash" id="trash-action"></i></a>
             </td>
         </tr>
     <?php endforeach; ?>

@@ -27,6 +27,24 @@ header {
     margin: 1rem;
 }
 
+
+a.btn.btn-create {
+    font-size: 16px;
+}
+
+.btn-custom {
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 6px;
+    display: inline-block;
+    cursor: pointer;
+    font-family: Bahnschrift, serif;
+    font-size: medium;
+}
+
 .burger-menu span {
     display: block;
     height: 3px;
@@ -43,10 +61,54 @@ header {
     top: 1rem;
     right: 1rem;
 }
+
+@media (max-width: 540px) {
+    #trash-action {
+        margin-left: 0.5rem;
+    }
+
+    #actions {
+        padding-left: 0.5rem;
+    }
+}
+
+@media (max-width: 380px) {
+    #trash-action-categories {
+        margin-left: 0.5rem;
+    }
+    a.btn.btn-create {
+        font-size: 12px; !important;
+    }
+
+    .btn-custom {
+        font-size: 12px; !important;
+    }
+}
+
 /* Медійний запит для мобільних пристроїв */
 @media (max-width: 768px) {
     .burger-menu {
         display: flex;
+    }
+
+    #category-selector {
+        width: 60% !important;
+    }
+
+    .separator {
+        display: none;
+    }
+
+    table.table {
+        font-size: 12px; /* Менший розмір тексту */
+        overflow-x: auto; !important;
+    }
+    table.table th,
+    table.table td {
+        padding: 5px; /* Менший відступ для компактності */
+    }
+    table.table th {
+        font-weight: bold; /* Забезпечує видимість заголовків */
     }
 
     .container img {
@@ -74,7 +136,6 @@ header {
     #create-container .crud-form#transactions {
         margin-top: 8rem !important;
         min-height: 35rem !important;
-
     }
 
     .crud-form#transactions {
@@ -538,9 +599,6 @@ body::before {
     border-color: lightgray;
 }
 
-a.btn.btn-create {
-    font-size: 16px;
-}
 
 .dashboard {
     display: flex;
@@ -651,19 +709,6 @@ main {
 .text-done {
     --bs-text-opacity: 1;
     color: limegreen;
-}
-
-.btn-custom {
-    background-color: black;
-    border: 2px solid white;
-    color: white;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    border-radius: 6px;
-    display: inline-block;
-    cursor: pointer;
-    font-family: Bahnschrift;
-    font-size: medium;
 }
 
 .btn-custom:hover {
