@@ -4,7 +4,7 @@
     ob_start();
 ?>
 
-<div class="container text-center">
+<div class="container text-center" id="registration-container">
     <div>
         <a href="https://www.vecteezy.com/free-vector/registration">
             <img src="/images/signup_vecteezy.jpg" alt="Vecteezy.com Isometric flat 3d illustration concept of man filling registration form on screen Free Vector"
