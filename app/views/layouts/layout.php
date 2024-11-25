@@ -54,6 +54,9 @@
 <footer class="text-muted">
     <div class="text-center">
         &copy; Personal Finance Manager <?php echo date("Y");?>
+        <a href="https://github.com/ShadowPrice1328/PFM-php" id="git-link" style="float: right; margin-right: 1rem;">
+            <i class="fa-brands fa-github"></i> GitHub
+        </a>
     </div>
 </footer>
 </body>

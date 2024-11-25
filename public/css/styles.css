@@ -810,8 +810,12 @@ dd {
 }
 
 .text-muted {
-    color: lightslategray;
+    color: lightslategray !important;
     pointer-events: none;
+}
+
+#git-link {
+    pointer-events: auto !important;
 }
 
 .text-center {

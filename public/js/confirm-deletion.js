@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     const initialDetailsContent = $(".details-section dl").html();
 
     $("#delete-btn").on("click", function (e) {

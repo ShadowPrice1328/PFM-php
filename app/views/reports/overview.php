@@ -14,6 +14,8 @@
             <div class="chart-title">
                 <h2><?= htmlspecialchars($chartTitle) ?></h2>
             </div>
+
+
         <?php endif;?>
         <div>
             <?php if (empty($categoryCosts)): ?>
