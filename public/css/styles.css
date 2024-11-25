@@ -67,6 +67,17 @@ a.btn.btn-create {
         margin-left: 0.5rem;
     }
 
+    #barChart {
+        justify-content: center;
+        min-height: 25rem !important;  /* Збільшити висоту чарту */
+        min-width: 100% !important;     /* Збільшити ширину до 100% */
+    }
+
+    .form-box#chart {
+        min-height: 30rem;  /* Збільшити висоту контейнера для чарту */
+        margin-left: 2rem !important;
+    }
+
     #actions {
         padding-left: 0.5rem;
     }
@@ -124,7 +135,7 @@ a.btn.btn-create {
         min-height: 50rem !important;
     }
 
-    .container#container-overview {
+    .container#container-overview, #container-daily {
         min-height: 40rem !important;
     }
 
@@ -133,6 +144,11 @@ a.btn.btn-create {
         margin: auto;
         margin-left: 10rem !important;
         margin-bottom: 3rem;
+    }
+
+    #barChart {
+        min-height: auto !important;
+        min-width: auto !important;
     }
 
     .form-box#chart:has(+ div canvas) {
@@ -360,7 +376,7 @@ body::before {
     text-align: center;
 }
 
-#lineChart {
+#barChart {
     min-height: 20rem;
     min-width: 30rem;
 }

@@ -1,11 +1,13 @@
 <?php
     $pageTitle = "Daily Report";
     ob_start();
+
+
     ?>
 
-<div class="container">
+<div class="container" id="container-daily">
     <div class="form-box" id="chart">
-        <h1>Generate line chart <i class="fa-solid fa-chart-line" style="margin-left:0.2rem"></i></h1>
+        <h1>Generate bar chart <i class="fa-solid fa-chart-simple" style="margin-left:0.2rem"></i></h1>
         <?php include_once(__DIR__ . '/../../partialViews/reports_partial.php'); ?>
     </div>
 
@@ -19,7 +21,7 @@
             <?php if (empty($costsByDate)): ?>
                 <p>No transactions available for the selected date range.</p>
             <?php else: ?>
-                <canvas id="lineChart"></canvas>
+                <canvas id="barChart"></canvas>
             <?php endif; ?>
         </div>
         <?php if (!empty($costsByDate)) : ?>
@@ -40,7 +42,6 @@
 
 <script>
     let costsByDate = <?= json_encode($costsByDate ?? []) ?>;
-    let categoryCostsByDate = <?= json_encode($categoryCostsByDate ?? []) ?>;
 
     // Extract dates and total costs
     let dates = Object.keys(costsByDate);
@@ -50,69 +51,46 @@
     let type = <?= json_encode($model->type) ?>;
 
     // Initialize the line chart
-    let ctx = document.getElementById('lineChart').getContext('2d');
+    let ctx = document.getElementById('barChart').getContext('2d');
     let chart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: dates,
             datasets: [{
                 label: `Daily ${type}s`,
                 data: costs,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
                 borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                pointBackgroundColor: 'rgba(75, 192, 192, 1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
             }]
         },
         options: {
             responsive: true,
-            title: {
-                display: true,
-                text: `Day-by-Day ${type}s`
-            },
             scales: {
                 x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        displayFormats: {
+                            day: 'yyyy-MM-dd'
+                        }
+                    },
                     title: {
                         display: true,
                         text: 'Date'
                     }
                 },
                 y: {
+                    beginAtZero: true,
                     title: {
                         display: true,
                         text: 'Costs'
                     }
                 }
-            },
-            plugins: {
-                tooltip: {
-                    callbacks: {
-                        title: function(tooltipItems) {
-                            // Get the date from the tooltip item
-                            let date = tooltipItems[0].label;
-                            return date;
-                        },
-                        label: function(tooltipItem) {
-                            let date = tooltipItem.label;
-                            let totalCost = costsByDate[date]; // Total cost for the date
-                            let categories = categoryCostsByDate[date];
-
-                            // Create the tooltip label
-                            let labels = [];
-                            for (const [category, cost] of Object.entries(categories)) {
-                                labels.push(`${category}: ${cost}`);
-                            }
-
-                            // Add the total cost summary at the end
-                            return [...labels, `Sum: ${totalCost}`];
-                        }
-                    }
-                }
             }
         }
     });
+
 </script>
 
 
