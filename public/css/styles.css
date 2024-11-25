@@ -124,8 +124,24 @@ a.btn.btn-create {
         min-height: 50rem !important;
     }
 
+    .container#container-overview {
+        min-height: 40rem !important;
+    }
+
+    .form-box#chart {
+        min-height: 25rem;
+        margin: auto;
+        margin-left: 10rem !important;
+        margin-bottom: 3rem;
+    }
+
+    .form-box#chart:has(+ div canvas) {
+        margin-top: 20rem;
+    }
+
     .container#home-container {
         min-height: 40rem !important;
+        flex-direction: column !important;
     }
 
     #details-container, #edit-container, #delete-container, #create-container{

@@ -3,7 +3,7 @@
     ob_start();
 ?>
 
-<div class="container">
+<div class="container" id="container-overview">
     <div class="form-box" id="chart" >
         <h1>Generate pie chart <i class="fa-solid fa-chart-pie" style="margin-left:0.2rem"></i></h1>
         <?php include_once(__DIR__ . '/../../partialViews/reports_partial.php'); ?>
