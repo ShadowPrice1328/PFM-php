@@ -63,7 +63,7 @@ a.btn.btn-create {
 }
 
 @media (max-width: 540px) {
-    #trash-action {
+    .trash-action {
         margin-left: 0.5rem;
     }
 
@@ -78,13 +78,13 @@ a.btn.btn-create {
         margin-left: 2rem !important;
     }
 
-    #actions {
+    .actions {
         padding-left: 0.5rem;
     }
 }
 
 @media (max-width: 380px) {
-    #trash-action-categories {
+    .trash-action-categories {
         margin-left: 0.5rem;
     }
     a.btn.btn-create {

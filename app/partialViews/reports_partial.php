@@ -4,7 +4,7 @@
     <?php endif; ?>
     <div class="form-group">
         <label for="firstDate" class="control-label">From
-            <input name="firstDate" type="date" max="<?= htmlspecialchars(date('Y-m-d')) ?>"
+            <input name="firstDate" id="firstDate" type="date" max="<?= htmlspecialchars(date('Y-m-d')) ?>"
                    value="<?= isset($model) ? htmlspecialchars($model->firstDate->format('Y-m-d')) : '' ?>" class="form-control" required />
         </label>
         <?php if (!empty($errors['firstDate'])): ?>
@@ -13,7 +13,7 @@
     </div>
     <div class="form-group">
         <label for="lastDate" class="control-label">To
-            <input name="lastDate" type="date" max="<?= htmlspecialchars(date('Y-m-d')) ?>"
+            <input name="lastDate" id="lastDate" type="date" max="<?= htmlspecialchars(date('Y-m-d')) ?>"
                    value="<?= isset($model) ? htmlspecialchars($model->lastDate->format('Y-m-d')) : '' ?>" class="form-control" required />
         </label>
         <?php if (!empty($errors['lastDate'])): ?>
@@ -24,7 +24,7 @@
         <label for="type" class="control-label">Type</label>
         <div class="select-wrapper">
             <label>
-                <select name="type" class="form-control">
+                <select name="type" class="form-control" id="type">
                     <option value="Expense" <?= (!isset($model->type) || $model->type === "Expense") ? 'selected' : ''?>>Expense</option>
                     <option value="Revenue" <?= (isset($model->type) && $model->type === "Revenue") ? 'selected' : ''?>>Revenue</option>
                 </select>
@@ -39,7 +39,7 @@
         <div class="select-wrapper">
             <?php if (!empty($category_names)): ?>
                 <label>
-                    <select class="form-control" name="category">
+                    <select class="form-control" name="category" id="category">
                         <option value="" <?= (!isset($model->category)) ? 'selected' : '' ?>>Select Category</option>
                         <?php foreach ($category_names as $category_name): ?>
                             <option value="<?= htmlspecialchars($category_name) ?>" <?= (isset($model->category) && $model->category === $category_name) ? 'selected' : ''?>>

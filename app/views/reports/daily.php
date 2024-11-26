@@ -1,8 +1,6 @@
 <?php
     $pageTitle = "Daily Report";
     ob_start();
-
-
     ?>
 
 <div class="container" id="container-daily">

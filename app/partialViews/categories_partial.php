@@ -12,7 +12,7 @@
                     <i class="fa-solid fa-circle-info"></i>
                 </a> <span class="separator">|</span>
                 <a href="/categories/delete?id=<?php echo urlencode($item->id); ?>">
-                    <i class="fa-solid fa-trash" id="trash-action-categories"></i>
+                    <i class="fa-solid fa-trash trash-action-categories"></i>
                 </a>
             </td>
         </tr>
