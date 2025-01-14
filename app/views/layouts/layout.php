@@ -32,6 +32,7 @@
         <li><a href="/overview" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Overview</a></li>
         <li><a href="/daily" class="<?php echo $authenticated ? '' : 'text-muted'; ?>">Daily Report</a></li>
         <li><a href="/contact">Contact</a></li>
+        <li><a href="/shop">Shop</a></li>
 
         <li style="float: right;">
             <?php if (!$authenticated): ?>

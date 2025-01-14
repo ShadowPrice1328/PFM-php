@@ -6,6 +6,7 @@ ini_set('display_errors', 1);
 require_once(__DIR__ . '/../app/controllers/HomeController.php');
 require_once(__DIR__ . '/../app/controllers/CategoriesController.php');
 require_once(__DIR__ . '/../app/controllers/AuthController.php');
+require_once(__DIR__ . '/../app/controllers/ShopController.php');
 require_once(__DIR__ . '/../app/controllers/TransactionsController.php');
 require_once(__DIR__ . '/../app/controllers/ReportsController.php');
 require_once(__DIR__ . '/../app/services/DatabaseService.php');
@@ -15,7 +16,7 @@ require_once(__DIR__ . '/../app/services/ReportsService.php');
 require_once(__DIR__ . '/../app/services/SessionManager.php');
 require_once(__DIR__ . '/../app/services/AuthService.php');
 
-
+use controllers\ShopController;
 use controllers\AuthController;
 use controllers\CategoriesController;
 use controllers\HomeController;
@@ -41,6 +42,7 @@ $categoriesController = new CategoriesController($databaseService, $categoriesSe
 $transactionsController = new TransactionsController($databaseService, $transactionsService, $categoriesService);
 $reportsController = new ReportsController($databaseService, $categoriesService, $transactionsService, $reportsService);
 $authController = new AuthController($authService);
+$shopController = new ShopController($databaseService);
 
 // Отримуємо шлях запиту без параметрів
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -123,6 +125,9 @@ switch ($request) {
         break;
     case $request === '/daily':
         $reportsController->daily();
+        break;
+    case $request === '/shop':
+        $shopController->index();
         break;
     case $request === '/contact/submit':
         $homeController->sendEmail();
