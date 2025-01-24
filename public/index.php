@@ -15,6 +15,7 @@ require_once(__DIR__ . '/../app/services/TransactionsService.php');
 require_once(__DIR__ . '/../app/services/ReportsService.php');
 require_once(__DIR__ . '/../app/services/SessionManager.php');
 require_once(__DIR__ . '/../app/services/AuthService.php');
+require_once(__DIR__ . '/../app/services/ProductsService.php');
 
 use controllers\ShopController;
 use controllers\AuthController;
@@ -24,6 +25,7 @@ use controllers\ReportsController;
 use controllers\TransactionsController;
 use services\AuthService;
 use services\CategoriesService;
+use services\ProductsService;
 use services\ReportsService;
 use services\SessionManager;
 use services\TransactionsService;
@@ -36,13 +38,14 @@ $categoriesService = new CategoriesService($databaseService->getPdo());
 $transactionsService = new TransactionsService($databaseService->getPdo());
 $reportsService = new ReportsService($transactionsService);
 $authService = new AuthService($databaseService->getPdo());
+$productsService = new ProductsService();
 
 $homeController = new HomeController($databaseService, $categoriesService, $transactionsService, $authService);
 $categoriesController = new CategoriesController($databaseService, $categoriesService);
 $transactionsController = new TransactionsController($databaseService, $transactionsService, $categoriesService);
 $reportsController = new ReportsController($databaseService, $categoriesService, $transactionsService, $reportsService);
 $authController = new AuthController($authService);
-$shopController = new ShopController($databaseService);
+$shopController = new ShopController($databaseService, $productsService);
 
 // Отримуємо шлях запиту без параметрів
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
