@@ -24,6 +24,7 @@ class ProductsService implements IProductsService
         $product1->description = "A stylish paper planner with monthly and weekly sections for tracking expenses, setting savings goals, and building better financial habits.";
         $product1->price = new Decimal(20);
         $product1->quantity = 90;
+        $product1->image = "/images/planner.jpg";
 
         $product2 = new Product();
         $product2->id = Guid::createGUID();
@@ -31,6 +32,7 @@ class ProductsService implements IProductsService
         $product2->description = "A set of colorful highlighters and stickers to label different spending categories in your planner or journal.";
         $product2->price = new Decimal(8);
         $product2->quantity = 150;
+        $product2->image = "/images/stickers.jpeg";
 
         $product3 = new Product();
         $product3->id = Guid::createGUID();
@@ -38,6 +40,7 @@ class ProductsService implements IProductsService
         $product3->description = "A practical guide to budgeting, cutting unnecessary expenses, and building a solid financial foundation. Great for beginners!";
         $product3->price = new Decimal(15);
         $product3->quantity = 75;
+        $product3->image = "/images/book.jpg";
 
         $product4 = new Product();
         $product4->id = Guid::createGUID();
@@ -45,6 +48,7 @@ class ProductsService implements IProductsService
         $product4->description = "A video course with actionable lessons on managing personal finances, building a budget, and saving smarter. Includes downloadable materials.";
         $product4->price = new Decimal(50);
         $product4->quantity = 200;
+        $product4->image = "/images/course.jpg";
 
         $product5 = new Product();
         $product5->id = Guid::createGUID();
@@ -52,6 +56,7 @@ class ProductsService implements IProductsService
         $product5->description = "A physical kit with labeled cash envelopes, a budget tracker pad, and tips to use the cash envelope method for better control over spending.";
         $product5->price = new Decimal(25);
         $product5->quantity = 100;
+        $product5->image = "/images/envelope.jpg";
 
         $products = [$product1, $product2, $product3, $product4, $product5];
 
@@ -63,6 +68,7 @@ class ProductsService implements IProductsService
             $product->description = $prod->description;
             $product->price = $prod->price;
             $product->quantity = $prod->quantity;
+            $product->image = $prod->image;
 
             return ProductExtensions::toProductResponse($product); // Use the existing method
         }, $products);

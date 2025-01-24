@@ -3,9 +3,11 @@
 namespace controllers;
 
 require_once(__DIR__ . '/../services/ProductsService.php');
+require_once(__DIR__ . '/../services/CartService.php');
 require_once(__DIR__ . '/../viewmodels/ProductViewModel.php');
 
 use DatabaseService;
+use services\CartService;
 use services\ProductsService;
 use viewmodels\ProductViewModel;
 
@@ -34,7 +36,22 @@ class ShopController
 
     public function index(): void
     {
-        $productsViewModel = new ProductViewModel($this->productsService->getProducts());
+        $viewModel = new ProductViewModel($this->productsService->getProducts());
         include_once(__DIR__ . '/../views/shop/index.php');
+    }
+
+    public function addToCart() : void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productId']) && $_POST['quantity']) {
+            CartService::addToCart($_POST['productId'], $_POST['quantity']);
+        }
+
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Product added to cart successfully',
+            'cart' => $_SESSION['cart']
+        ]);
+
+        exit;
     }
 }

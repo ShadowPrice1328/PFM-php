@@ -30,4 +30,9 @@ class Product
      * @var int
      */
     public int $quantity;
+
+    /**
+     * @var string
+     */
+    public string $image;
 }
