@@ -102,6 +102,14 @@ a.btn.btn-create {
         display: flex;
     }
 
+    .menu li #cart {
+        display: none !important;
+    }
+
+    .menu li #logout {
+        margin-left: 7.5rem !important;
+    }
+
     #category-selector {
         width: 60% !important;
     }
@@ -234,7 +242,9 @@ a.btn.btn-create {
     }
 
     .mobile-icon {
-        display: block;
+        display: flex;
+        gap: 0.5rem;
+        margin-right: 0.5rem;
         transform: scale(1.5);
     }
 

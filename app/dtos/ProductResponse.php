@@ -32,7 +32,7 @@ class ProductResponse
      */
     public int $quantity;
 
-    public function __construct(int $id, string $name, string $description, Decimal $price, int $quantity)
+    public function __construct(string $id, string $name, string $description, Decimal $price, int $quantity)
     {
         $this->id = $id;
         $this->name = $name;

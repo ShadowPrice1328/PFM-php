@@ -34,15 +34,17 @@
         <li><a href="/contact">Contact</a></li>
         <li><a href="/shop">Shop</a></li>
 
-        <li style="float: right;">
+        <li style="float: right; display: flex">
+            <a href="/cart"><i class="fa-solid fa-cart-shopping" id="cart"></i></a>
             <?php if (!$authenticated): ?>
                 <a href="/register"><i class="fa-solid fa-user-plus" style="padding-right: 12px"></i>Create a new account</a>
             <?php else: ?>
-                <a href="#" onclick="logout()">Logout</a>
+                <a href="#" onclick="logout()" id="logout">Logout</a>
             <?php endif; ?>
         </li>
     </ul>
     <div class="mobile-icon">
+        <a href="/cart"><i class="fa-solid fa-cart-shopping" id="cart"></i></a>
         <i class="fa-solid fa-coins"></i>
     </div>
 </header>

@@ -2,6 +2,9 @@
 
 namespace controllers;
 
+require_once(__DIR__ . '/../services/ProductsService.php');
+require_once(__DIR__ . '/../viewmodels/ProductViewModel.php');
+
 use DatabaseService;
 use services\ProductsService;
 use viewmodels\ProductViewModel;

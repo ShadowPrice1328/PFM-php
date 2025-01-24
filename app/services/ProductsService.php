@@ -56,7 +56,14 @@ class ProductsService implements IProductsService
         $products = [$product1, $product2, $product3, $product4, $product5];
 
         return array_map(function ($prod) {
-            $product = new Product($prod->id, $prod->name, $prod->description, $prod->price, $prod->quantity);
+            $product = new Product();
+
+            $product->id = $prod->id;
+            $product->name = $prod->name;
+            $product->description = $prod->description;
+            $product->price = $prod->price;
+            $product->quantity = $prod->quantity;
+
             return ProductExtensions::toProductResponse($product); // Use the existing method
         }, $products);
     }
