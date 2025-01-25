@@ -16,7 +16,69 @@ require_once __DIR__ . '/../interfaces/IProductsService.php';
 
 class ProductsService implements IProductsService
 {
+    private static ?ProductsService $instance = null;
+    private array $products;
+
+    public function __construct()
+    {
+        if (!session_id()) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['products'])) {
+            $_SESSION['products'] = $this->seedData();
+        }
+
+        $this->products = $_SESSION['products'];
+    }
+
+
+    public static function getInstance(): ProductsService
+    {
+        if (self::$instance === null) {
+            self::$instance = new ProductsService();
+        }
+
+        return self::$instance;
+    }
+
+    private function __clone() {}
+
+    public function __wakeup() {}
+
     public function getProducts(): array
+    {
+        return array_map(function ($prod) {
+            $product = new Product();
+
+            $product->id = $prod->id;
+            $product->name = $prod->name;
+            $product->description = $prod->description;
+            $product->price = $prod->price;
+            $product->quantity = $prod->quantity;
+            $product->image = $prod->image;
+
+            return ProductExtensions::toProductResponse($product); // Use the existing method
+        }, $this->products);
+    }
+
+    public function getProductById(string $id): ?Product
+    {
+//        echo $id . "<br>";
+//        var_dump($this->products);
+
+//        var_dump($this->products);
+        foreach ($this->products as $product) {
+            if ($product->id === $id) {
+                return $product;
+            }
+        }
+
+        return null;
+    }
+
+
+    private function seedData() : array
     {
         $product1 = new Product();
         $product1->id = Guid::createGUID();
@@ -58,19 +120,6 @@ class ProductsService implements IProductsService
         $product5->quantity = 100;
         $product5->image = "/images/envelope.jpg";
 
-        $products = [$product1, $product2, $product3, $product4, $product5];
-
-        return array_map(function ($prod) {
-            $product = new Product();
-
-            $product->id = $prod->id;
-            $product->name = $prod->name;
-            $product->description = $prod->description;
-            $product->price = $prod->price;
-            $product->quantity = $prod->quantity;
-            $product->image = $prod->image;
-
-            return ProductExtensions::toProductResponse($product); // Use the existing method
-        }, $products);
+        return [$product1, $product2, $product3, $product4, $product5];
     }
 }

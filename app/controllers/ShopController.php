@@ -54,4 +54,16 @@ class ShopController
 
         exit;
     }
+
+    public function cart() : void
+    {
+        $cart = CartService::getCart();
+        $addedProducts = [];
+
+        foreach ($cart as $product) {
+            $addedProducts[] = $this->productsService->getProductById($product['id']);
+        }
+
+        include_once(__DIR__ . '/../views/shop/cart.php');
+    }
 }

@@ -24,6 +24,7 @@ use controllers\HomeController;
 use controllers\ReportsController;
 use controllers\TransactionsController;
 use services\AuthService;
+use services\CartService;
 use services\CategoriesService;
 use services\ProductsService;
 use services\ReportsService;
@@ -38,7 +39,8 @@ $categoriesService = new CategoriesService($databaseService->getPdo());
 $transactionsService = new TransactionsService($databaseService->getPdo());
 $reportsService = new ReportsService($transactionsService);
 $authService = new AuthService($databaseService->getPdo());
-$productsService = new ProductsService();
+$productsService = ProductsService::getInstance();
+$cartService = new CartService();
 
 $homeController = new HomeController($databaseService, $categoriesService, $transactionsService, $authService);
 $categoriesController = new CategoriesController($databaseService, $categoriesService);
@@ -137,6 +139,9 @@ switch ($request) {
         break;
     case $request === '/add-to-cart':
         $shopController->addToCart();
+        break;
+    case $request === '/cart':
+        $shopController->cart();
         break;
     default:
         http_response_code(404);

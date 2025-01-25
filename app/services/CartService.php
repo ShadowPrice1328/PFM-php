@@ -4,11 +4,18 @@ namespace services;
 
 class CartService
 {
-    public static function addToCart($id, $quantity): void {
+    public function __construct()
+    {
+        if (!session_id()) {
+            session_start();
+        }
+
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
+    }
 
+    public static function addToCart($id, $quantity): void {
         if (isset($_SESSION['cart'][$id])) {
             $_SESSION['cart'][$id]['quantity'] += $quantity;
         } else {
