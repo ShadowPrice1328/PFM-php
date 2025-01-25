@@ -23,11 +23,11 @@ ob_start();
             <td id="price-<?= $item->id ?>"><?= htmlspecialchars($item->price->getValue()) . 'zł'?></td>
             <td>
                 <label>
-                    <input type="number" id="quantity-<?= $item->id ?>" name="<?= $item->id ?>" value="<?= htmlspecialchars($cart[$item->id]['quantity']) ?>" min="1">
+                    <input type="number" class="cart-quant" id="quantity-<?= $item->id ?>" name="<?= $item->id ?>" value="<?= htmlspecialchars($cart[$item->id]['quantity']) ?>" min="1">
                 </label>
             </td>
             <td><b id="total-<?= $item->id ?>"><?= htmlspecialchars($item->price->getValue() * $cart[$item->id]['quantity']) . 'zł' ?></b>
-                <span class="close" onclick="removeFromCart("<?= htmlspecialchars($item->id) ?>">&times;</span>
+                <span class="close" onclick="removeFromCart('<?= htmlspecialchars($item->id) ?>')">&times;</span>
             </td>
         <?php endif; ?>
     </tr>
@@ -46,3 +46,11 @@ ob_start();
 $content = ob_get_clean();
 include_once __DIR__ . "/../layouts/layout.php";
 ?>
+
+<script>
+    $(".cart-quant").on("input", function() {
+        if (/^0/.test(this.value)) {
+            this.value = this.value.replace(/^0/, "")
+        }
+    })
+</script>

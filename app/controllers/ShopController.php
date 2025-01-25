@@ -93,6 +93,7 @@ class ShopController
                 $foundProduct = $this->productsService->getProductById($product['id']);
 
                 $cartInfo[$product['id']] = [
+                    'id' => $foundProduct->id,
                     'name' => $foundProduct->name,
                     'price' => $foundProduct->price->getValue(),
                     'quantity' => $product['quantity'],

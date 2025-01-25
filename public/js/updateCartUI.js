@@ -3,17 +3,15 @@ function updateCartUI() {
         url: '/get-cart-info',
         method: 'GET',
         success: function(response) {
-            console.log((response));
             console.log('Cart UI updated successfully');
 
             const cartData = Object.values(JSON.parse(response)); // Convert object to array
-            console.log(cartData);
 
             cartData.forEach(function(item) {
                 $(`#name-${item.id}`).text(item.name);
                 $(`#price-${item.id}`).text(item.price + 'zł');
                 $(`#quantity-${item.id}`).val(item.quantity);
-                $(`#total-${item.id}`).text(item.total + 'zł');
+                $(`#total-${item.id}`).text(item.total + 'zł'); // Update the total
             });
 
             let totalCartPrice = 0;

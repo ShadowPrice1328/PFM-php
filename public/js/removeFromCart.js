@@ -8,6 +8,7 @@ function removeFromCart(productId) {
         },
         success: function(response) {
             console.log('Product removed successfully', response);
+            $(`#product-row-${productId}`).remove();
             updateCartUI();
         },
         error: function() {
