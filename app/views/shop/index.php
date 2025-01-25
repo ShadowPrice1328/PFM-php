@@ -14,7 +14,7 @@ ob_start();
             <h3><?= htmlspecialchars($product->name); ?></h3>
             <p>Price: <?= htmlspecialchars($product->price->getValue()); ?> zł</p>
             <img src="<?= htmlspecialchars($product->image); ?>" alt="" width="50%">
-            <button class="btn-create" onclick="addToCart('<?= $product->id ?>', 1)">Add to Cart</button>
+            <button class="btn-create" onclick="addToCart('<?= $product->id ?>', 1)" style="margin-left: 2rem;">Add to Cart</button>
         </div>
     <?php endforeach; ?>
 </div>

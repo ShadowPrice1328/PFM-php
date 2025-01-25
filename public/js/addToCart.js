@@ -1,6 +1,6 @@
 function addToCart(productId, quantity) {
     $.ajax({
-        url: '/add-to-cart.php',
+        url: '/add-to-cart',
         type: 'POST',
         data: {
             productId: productId,
