@@ -59,11 +59,61 @@ class ShopController
     {
         $cart = CartService::getCart();
         $addedProducts = [];
+        $totalPrice = 0;
 
         foreach ($cart as $product) {
-            $addedProducts[] = $this->productsService->getProductById($product['id']);
+            $foundProduct = $this->productsService->getProductById($product['id']);
+            $addedProducts[] = $foundProduct;
+
+            $totalPrice += $foundProduct->price->getValue() * $cart[$product['id']]['quantity'];
         }
 
         include_once(__DIR__ . '/../views/shop/cart.php');
+    }
+
+    public function updateCart() : void
+    {
+        CartService::updateProduct($_POST['productId'], $_POST['quantity']);
+
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Product updates successfully',
+            'cart' => $_SESSION['cart']
+        ]);
+
+        exit;
+    }
+
+    public function getCartInfo()
+    {
+        $cartInfo = [];
+
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $product) {
+                $foundProduct = $this->productsService->getProductById($product['id']);
+
+                $cartInfo[$product['id']] = [
+                    'name' => $foundProduct->name,
+                    'price' => $foundProduct->price->getValue(),
+                    'quantity' => $product['quantity'],
+                    'total' => $foundProduct->price->getValue() * $product['quantity'],
+                ];
+            }
+        }
+
+        echo json_encode($cartInfo);
+        exit;
+    }
+
+    public function removeFromCart() : void
+    {
+        CartService::removeProductFromCart($_POST['productId']);
+
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Product has been removed successfully',
+        ]);
+
+        exit;
     }
 }

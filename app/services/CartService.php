@@ -33,4 +33,21 @@ class CartService
     public static function removeFromCart($id): void {
         unset($_SESSION['cart'][$id]);
     }
+
+    public static function updateProduct($id, $quantity): void
+    {
+        if (isset($_SESSION['cart'][$id])) {
+            $_SESSION['cart'][$id]['quantity'] = $quantity;
+        } else {
+            $_SESSION['cart'][$id] = [
+                'id' => $id,
+                'quantity' => $quantity
+            ];
+        }
+    }
+
+    public static function removeProductFromCart($id): void
+    {
+        unset($_SESSION['cart'][$id]);
+    }
 }

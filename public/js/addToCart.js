@@ -1,4 +1,6 @@
 function addToCart(productId, quantity) {
+    event.stopPropagation();
+
     $.ajax({
         url: '/add-to-cart',
         type: 'POST',

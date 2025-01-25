@@ -143,6 +143,15 @@ switch ($request) {
     case $request === '/cart':
         $shopController->cart();
         break;
+    case $request === '/update-cart':
+        $shopController->updateCart();
+        break;
+    case $request === '/remove-from-cart':
+        $shopController->removeFromCart();
+        break;
+    case $request === '/get-cart-info':
+        $shopController->getCartInfo();
+        break;
     default:
         http_response_code(404);
         require __DIR__ . '/../app/views/404.php';
