@@ -61,4 +61,3 @@ include_once __DIR__ . "/../layouts/layout.php";
 </script>
 
 <script src='/js/loadDeliveryForm.js'></script>
-

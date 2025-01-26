@@ -16,6 +16,13 @@ function updateCartUI() {
 
             console.log(cartData[cartData.length - 1]);
             $('#total-cart').text('Total: ' + cartData[cartData.length - 1] + 'zł');
+
+            let cartItems = document.querySelectorAll('.cart-quant');
+            let isCartEmpty = Array.from(cartItems).every(input => input.value == 0); // Check if all quantities are 0
+
+            if (isCartEmpty) {
+                document.getElementById('delivery-form').style.display = 'none';  // Hide if empty
+            }
         },
         error: function() {
             alert('Error updating the cart');
