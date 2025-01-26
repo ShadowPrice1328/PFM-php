@@ -41,6 +41,11 @@ ob_start();
         </td>
     </tr>
 </table>
+<button class="btn-create" style="float: right">Checkout</button><br/>
+
+<div id="delivery-form"></div>
+
+<?php //include_once __DIR__ . "/../shop/checkout_form.php";?>
 
 <?php
 $content = ob_get_clean();
@@ -54,3 +59,6 @@ include_once __DIR__ . "/../layouts/layout.php";
         }
     })
 </script>
+
+<script src='/js/loadDeliveryForm.js'></script>
+

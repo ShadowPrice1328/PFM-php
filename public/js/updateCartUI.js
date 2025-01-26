@@ -14,11 +14,8 @@ function updateCartUI() {
                 $(`#total-${item.id}`).text(item.total + 'zł'); // Update the total
             });
 
-            let totalCartPrice = 0;
-            cartData.forEach(function(item) {
-                totalCartPrice += item.total;
-            });
-            $('#total-cart').text('Total: ' + totalCartPrice + 'zł');
+            console.log(cartData[cartData.length - 1]);
+            $('#total-cart').text('Total: ' + cartData[cartData.length - 1] + 'zł');
         },
         error: function() {
             alert('Error updating the cart');

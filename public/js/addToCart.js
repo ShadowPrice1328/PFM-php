@@ -12,7 +12,7 @@ function addToCart(productId, quantity) {
             let data = JSON.parse(response);
 
             if (data.status === 'success') {
-                alert(data.message);
+                console.log(data.message);
             } else {
                 alert('Error adding product to cart');
             }

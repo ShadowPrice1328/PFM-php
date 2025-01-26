@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('input[type="number"]').on('change', function() {
+    $('input[type="number"].cart-quant').on('change', function() {
         let productId = $(this).attr('name');
         let quantity = $(this).val();
 

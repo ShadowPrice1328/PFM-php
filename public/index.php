@@ -152,6 +152,9 @@ switch ($request) {
     case $request === '/get-cart-info':
         $shopController->getCartInfo();
         break;
+    case $request === '/delivery_form':
+        $shopController->loadDeliveryForm();
+        break;
     default:
         http_response_code(404);
         require __DIR__ . '/../app/views/404.php';

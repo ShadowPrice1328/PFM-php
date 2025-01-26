@@ -352,6 +352,17 @@ body::before {
     width: 100%;
 }
 
+.container:has(#delivery-form) {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: grey 2px solid;
+    margin-bottom: 2rem;
+}
+
+#delivery-form .form-group {
+    padding-top: 0.8rem;
+}
+
 /* Modal Styles */
 .modal {
     display: none; /* Hidden by default */
@@ -389,6 +400,20 @@ body::before {
     cursor: pointer;
 }
 
+#delivery-form {
+    right: 0 !important;
+    min-width: 2rem; !important;
+}
+
+#delivery-form h1 {
+    text-align: center !important;
+    margin: 0 !important;
+}
+
+#delivery-form p {
+    text-align: center;
+    margin-top: 0!important;
+}
 
 .form-box {
     background-color: #ffffff;

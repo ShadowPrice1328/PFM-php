@@ -87,8 +87,10 @@ class ShopController
     public function getCartInfo()
     {
         $cartInfo = [];
+        $totalPrice = 0;
 
         if (isset($_SESSION['cart'])) {
+
             foreach ($_SESSION['cart'] as $product) {
                 $foundProduct = $this->productsService->getProductById($product['id']);
 
@@ -99,7 +101,10 @@ class ShopController
                     'quantity' => $product['quantity'],
                     'total' => $foundProduct->price->getValue() * $product['quantity'],
                 ];
+
+                $totalPrice += $cartInfo[$product['id']]['total'];
             }
+            $cartInfo['totalPrice'] = $totalPrice;
         }
 
         echo json_encode($cartInfo);
@@ -115,6 +120,17 @@ class ShopController
             'message' => 'Product has been removed successfully',
         ]);
 
+        exit;
+    }
+
+    public function loadDeliveryForm()
+    {
+        ob_start();
+        include_once(__DIR__ . '/../views/shop/deliveryForm.php');
+        $content = ob_get_clean();
+
+        header('Content-Type: application/json');
+        echo json_encode(['content' => $content]);
         exit;
     }
 }
